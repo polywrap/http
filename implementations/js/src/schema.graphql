@@ -1,0 +1,4 @@
+#import { Module } into Http from "ens/wrappers.polywrap.eth:http@1.1.0"
+
+type Module implements Http_Module {
+}
