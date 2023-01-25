@@ -1,6 +1,6 @@
 # @polywrap/http-plugin-js
 
-Http plugin curently supports two different methods `GET` and `POST`. Similar to calling axios, when defining request you need to specify a response type. Headers and query parameters may also be defined.
+Http plugin currently supports two different methods `GET` and `POST`. Similar to calling axios, when defining request you need to specify a response type. Headers and query parameters may also be defined.
 
 ## Response Types
 
@@ -13,15 +13,15 @@ Http plugin curently supports two different methods `GET` and `POST`. Similar to
 Below is sample invocation of the `GET` request with custom request headers and query parameters (`urlParams`).
 
 ```ts
-const response = await polywrapClient.invoke<Response>({
-  uri: new Uri("wrap://ens/http.polywrap.eth"),
+const result = await polywrapClient.invoke<Response>({
+  uri: "wrap://ens/http.polywrap.eth",
   method: "get",
   args: {
-    url: "http://www.example.com/api"
+    url: "http://www.example.com/api",
     request: {
-      responseType: "TEXT"
-      urlParams: [{key: "query", value: "foo"}]
-      headers: [{key: "X-Request-Header", value: "req-foo"}]
+      responseType: "TEXT",
+      urlParams: [{key: "query", value: "foo"}],
+      headers: [{key: "X-Request-Header", value: "req-foo"}],
     }
   }
 })
@@ -33,15 +33,15 @@ Below is sample invocation of the `POST` request with custom request headers and
 
 ```ts
 const response = await polywrapClient.invoke<Response>({
-  uri: new Uri("wrap://ens/http.polywrap.eth"),
+  uri: "wrap://ens/http.polywrap.eth",
   method: "post",
   args: {
-    url: "http://www.example.com/api"
+    url: "http://www.example.com/api",
     request: {
-      responseType: "TEXT"
-      urlParams: [{key: "query", value: "foo"}]
-      headers: [{key: "X-Request-Header", value: "req-foo"}]
-      body: "{data: 'test-request'}"
+      responseType: "TEXT",
+      urlParams: [{key: "query", value: "foo"}],
+      headers: [{key: "X-Request-Header", value: "req-foo"}],
+      body: "{data: 'test-request'}",
     }
   }
 })
