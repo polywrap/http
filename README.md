@@ -3,4 +3,4 @@ The HTTP interface wrapper defines a common interface for HTTP wrapper implement
 
 Table of Contents
 1. [HTTP Interface](./interface/resources/README.md)
-2. [HTTP Implementations](./implementations/)
+2. [HTTP Implementations](./implementations)
