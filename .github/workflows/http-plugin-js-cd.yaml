@@ -37,14 +37,15 @@ jobs:
         run: yarn build
         working-directory: ./implementations/js
 
-      - name: Deploy
-        run: yarn deploy
-        working-directory: ./implementations/js
+      - name: Auth into NPM
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken=${{secrets.POLYWRAP_BUILD_BOT_NPM_PAT}}
+          echo $(npm whoami --registry https://registry.npmjs.org/)
+        working-directory: ./logger/implementations/logger-plugin-js
 
-      - name: PR New URI
-        uses: peter-evans/create-pull-request@v3
-        with:
-          branch: http-plugin-js-cd-pr-${{github.event.number}}
-          commit-message: "[CD] http-plugin-js"
-          title: "[CD] http-plugin-js"
-          body: "Triggered by: https://github.com/${{github.repository}}/pull/${{github.event.number}}"
+      - name: Publish to NPM
+        run: yarn publish:npm
+        working-directory: ./logger/implementations/logger-plugin-js
+        env:
+          NPM_AUTH_TOKEN: ${{secrets.POLYWRAP_BUILD_BOT_NPM_PAT}}
