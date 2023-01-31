@@ -34,11 +34,13 @@ export function fromAxiosResponse(
 
   // encode bytes as base64 string if response is array buffer
   if (axiosResponse.config.responseType == "arraybuffer") {
-    if (!Buffer.isBuffer(axiosResponse.data)) {
-      throw Error(
-        "HttpPlugin: Axios response data malformed, must be a buffer. Type: " +
+    if (!(axiosResponse.data instanceof ArrayBuffer)) {
+      if (!Buffer.isBuffer(axiosResponse.data)) {
+        throw Error(
+          "HttpPlugin: Axios response data malformed, must be a buffer. Type: " +
           typeof axiosResponse.data
-      );
+        );
+      }
     }
 
     return {
