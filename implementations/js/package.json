@@ -1,7 +1,7 @@
 {
   "name": "@polywrap/http-plugin-js",
   "description": "Polywrap HTTP Javascript Plugin",
-  "version": "0.10.0-pre.8",
+  "version": "0.10.0-pre.7",
   "license": "MIT",
   "repository": {
     "type": "git",
