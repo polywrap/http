@@ -15,7 +15,7 @@ const defaultReplyHeaders = {
   "access-control-allow-credentials": "true",
 };
 
-const pluginUri = "ens/wrappers.polywrap.eth:http@1.1.0";
+const pluginUri = "ens/wraps.eth:http@1.1.0";
 
 describe("e2e tests for HttpPlugin", () => {
   let polywrapClient: PolywrapClient;

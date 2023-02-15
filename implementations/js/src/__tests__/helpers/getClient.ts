@@ -24,7 +24,7 @@ export const getClient = () => {
           [
             StaticResolver.from([
               {
-                uri: "ens/wrappers.polywrap.eth:http@1.1.0",
+                uri: "ens/wraps.eth:http@1.1.0",
                 package: httpPlugin({}),
               },
               {
