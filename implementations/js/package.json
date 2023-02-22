@@ -29,7 +29,7 @@
   "devDependencies": {
     "polywrap": "0.10.0-pre.8",
     "@polywrap/client-js": "0.10.0-pre.8",
-    "@polywrap/fs-plugin-js": "0.10.0-pre.8",
+    "temp-fs-plugin-js": "0.10.0-pre.8",
     "@polywrap/fs-resolver-plugin-js": "0.10.0-pre.8",
     "@polywrap/test-env-js": "0.10.0-pre.8",
     "@polywrap/uri-resolver-extensions-js": "0.10.0-pre.8",
