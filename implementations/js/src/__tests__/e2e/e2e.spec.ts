@@ -5,8 +5,9 @@ import { PolywrapClient } from "@polywrap/client-js";
 import { UriResolver } from "@polywrap/uri-resolvers-js";
 
 import nock from "nock";
-import { WrapError } from "@polywrap/core-js";
+import {Uri, WrapError} from "@polywrap/core-js";
 import { initTestEnvironment, stopTestEnvironment, providers } from "@polywrap/test-env-js";
+import {pluginUri} from "../helpers/getClient";
 
 jest.setTimeout(360000);
 
@@ -14,8 +15,6 @@ const defaultReplyHeaders = {
   "access-control-allow-origin": "*",
   "access-control-allow-credentials": "true",
 };
-
-const pluginUri = "ens/wraps.eth:http@1.1.0";
 
 describe("e2e tests for HttpPlugin", () => {
   let polywrapClient: PolywrapClient;
@@ -28,7 +27,7 @@ describe("e2e tests for HttpPlugin", () => {
     polywrapClient = new PolywrapClient(
       {
         resolver: UriResolver.from({
-          uri: pluginUri,
+          uri: Uri.from(pluginUri),
           package: httpPlugin({}),
         }),
       },
