@@ -70,8 +70,18 @@ export function fromAxiosResponse(
  * @param request
  */
 export function toAxiosRequestConfig(
-  request: Http_Request
+  request?: Http_Request
 ): AxiosRequestConfig {
+  const config: AxiosRequestConfig = { };
+
+  // NOTE: this reduces memory usage
+  // See: https://github.com/axios/axios/issues/2783
+  config.maxRedirects = 0;
+
+  if (!request) {
+    return config;
+  }
+
   let responseType: "text" | "arraybuffer" = "text";
 
   switch (request.responseType) {
@@ -80,16 +90,14 @@ export function toAxiosRequestConfig(
       responseType = "arraybuffer";
   }
 
-  let config: AxiosRequestConfig = {
-    responseType,
-  };
+  config.responseType = responseType
 
   if (request.urlParams) {
-    config = { ...config, params: Object.fromEntries(request.urlParams) };
+    config.params = Object.fromEntries(request.urlParams);
   }
 
   if (request.headers) {
-    config = { ...config, headers: Object.fromEntries(request.headers) };
+    config.headers = Object.fromEntries(request.headers);
   }
 
   if (request.timeout) {

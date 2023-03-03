@@ -50,6 +50,7 @@ describe("test http plugin", () => {
           ["Accept"]: "application/json",
           ["X-Test-Header"]: "test-header-value",
         },
+        maxRedirects: 0,
         params: { q: "test-param" },
         responseType: "text",
       } as AxiosRequestConfig);
@@ -93,6 +94,7 @@ describe("test http plugin", () => {
           ["Accept"]: "application/json",
           ["X-Test-Header"]: "test-header-value",
         },
+        maxRedirects: 0,
         params: { q: "test-param" },
         responseType: "arraybuffer",
       } as AxiosRequestConfig);
@@ -146,6 +148,7 @@ describe("test http plugin", () => {
           ["Accept"]: "application/json",
           ["X-Test-Header"]: "test-header-value",
         },
+        maxRedirects: 0,
         params: { q: "test-param" },
         responseType: "text",
       } as AxiosRequestConfig);
@@ -190,6 +193,7 @@ describe("test http plugin", () => {
           ["Accept"]: "application/json",
           ["X-Test-Header"]: "test-header-value",
         },
+        maxRedirects: 0,
         params: { q: "test-param" },
         responseType: "arraybuffer",
       } as AxiosRequestConfig);
