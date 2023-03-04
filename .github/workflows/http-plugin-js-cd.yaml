@@ -3,6 +3,8 @@ name: http-plugin-js-cd
 on:
   pull_request:
     types: [closed]
+    branches:
+      - main
     paths:
       - "implementations/js/**"
 
