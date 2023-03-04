@@ -28,7 +28,7 @@ jobs:
         run: |
           echo RELEASE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g') >> $GITHUB_ENV
 
-       - name: Is Pre-Release
+      - name: Is Pre-Release
         run: |
           STR="${RELEASE_VERSION}"
           SUB='pre.'
