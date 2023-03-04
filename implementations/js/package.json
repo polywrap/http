@@ -35,11 +35,7 @@
   "devDependencies": {
     "polywrap": "0.10.0-pre.10",
     "@polywrap/client-js": "0.10.0-pre.10",
-    "temp-fs-plugin-js": "0.10.0-pre.10",
-    "@polywrap/fs-resolver-plugin-js": "0.10.0-pre.10",
     "@polywrap/test-env-js": "0.10.0-pre.10",
-    "@polywrap/uri-resolver-extensions-js": "0.10.0-pre.10",
-    "@polywrap/uri-resolvers-js": "0.10.0-pre.10",
     "@types/jest": "26.0.8",
     "jest": "26.6.3",
     "nock": "13.0.7",
