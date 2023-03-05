@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "polywrap-http-plugin"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = ""
 authors = ["Niraj Kamdar <niraj@polywrap.io>"]
 readme = "README.md"
@@ -13,7 +13,7 @@ packages = [{include = "polywrap_http_plugin"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 polywrap-client = "0.1.0a11"
-polywrap-plugin = "^0.1.0a11"
+polywrap-plugin = "0.1.0a11"
 httpx = "^0.23.3"
 
 [tool.poetry.group.dev.dependencies]
