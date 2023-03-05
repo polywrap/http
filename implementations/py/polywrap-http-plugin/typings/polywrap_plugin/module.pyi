@@ -9,7 +9,7 @@ from polywrap_result import Result
 
 TConfig = TypeVar("TConfig")
 TResult = TypeVar("TResult")
-class PluginModule(Generic[TConfig, TResult], ABC):
+class PluginModule(Generic[TConfig], ABC):
     env: Dict[str, Any]
     config: TConfig
     def __init__(self, config: TConfig) -> None:

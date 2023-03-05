@@ -1,5 +1,5 @@
 from typing import cast
-from polywrap_http_plugin import HttpResponse, http_plugin
+from polywrap_http_plugin import http_plugin
 from polywrap_client import PolywrapClient, PolywrapClientConfig
 from polywrap_core import Uri, IUriResolver, InvokerOptions
 from polywrap_uri_resolvers import StaticResolver, RecursiveResolver
@@ -36,7 +36,4 @@ async def test_plugin():
     )
 
     assert result.is_err() == False
-    response = cast(HttpResponse, result.unwrap())
-    assert response["status"] == 200
-    assert response["body"] is not None
-    assert response["body"].startswith(b"<svg")
+    assert result.unwrap().startswith(b"<svg")

@@ -15,10 +15,11 @@ python = "^3.10"
 polywrap-core = "^0.1.0a4"
 polywrap-plugin = "^0.1.0a4"
 httpx = "^0.23.3"
+polywrap-client = "0.1.0a11"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
-polywrap-client = "^0.1.0a4"
+polywrap-client = "^0.1.0a11"
 pytest = "^7.2.1"
 pytest-asyncio = "^0.20.3"
 

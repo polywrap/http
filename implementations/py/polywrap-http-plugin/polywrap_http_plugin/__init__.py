@@ -1,5 +1,6 @@
+import base64
 from pathlib import Path
-from typing import List, Optional, Dict, TypedDict, cast
+from typing import List, Optional, TypedDict, Union, cast
 from enum import Enum
 import json
 
@@ -8,6 +9,7 @@ from polywrap_plugin import PluginModule, PluginPackage
 from polywrap_core import Invoker
 from polywrap_result import Ok, Result
 from polywrap_manifest import WrapManifest
+from polywrap_msgpack.generic_map import GenericMap
 
 
 class HttpResponseType(Enum):
@@ -23,9 +25,9 @@ class FormDataEntry(TypedDict):
 
 
 class HttpRequest(TypedDict):
-    headers: Optional[Dict[str, str]]
-    urlParams: Optional[Dict[str, str]]
-    responseType: HttpResponseType
+    headers: Optional[GenericMap[str, str]]
+    urlParams: Optional[GenericMap[str, str]]
+    responseType: Union[HttpResponseType, str, int]
     body: Optional[str]
     formData: Optional[List[FormDataEntry]]
     timeout: Optional[int]
@@ -33,7 +35,7 @@ class HttpRequest(TypedDict):
 class HttpResponse(TypedDict):
     status: int
     statusText: str
-    headers: Optional[Dict[str, str]]
+    headers: Optional[GenericMap[str, str]]
     body: Optional[str]
 
 
@@ -47,7 +49,19 @@ class ArgsPost(TypedDict):
     request: Optional[HttpRequest]
 
 
-class HttpPlugin(PluginModule[None, HttpResponse]):
+def isResponseBinary(args: ArgsGet) -> bool:
+    if args.get("request") is None:
+        return False
+    if not args["request"]:
+        return False
+    if isinstance(args["request"]["responseType"], int) and args["request"]["responseType"] == 1:
+        return True
+    if isinstance(args["request"]["responseType"], str) and args["request"]["responseType"] == "BINARY":
+        return True
+    return args["request"]["responseType"] == HttpResponseType.BINARY
+
+
+class HttpPlugin(PluginModule[None]):
     def __init__(self):
         super().__init__(None)
         self.client = AsyncClient()
@@ -66,11 +80,21 @@ class HttpPlugin(PluginModule[None, HttpResponse]):
         else:
             res = await self.client.get(args["url"])
 
+        if isResponseBinary(args):
+            return Ok(
+                HttpResponse(
+                    status=res.status_code,
+                    statusText=res.reason_phrase,
+                    headers=GenericMap(dict(res.headers)),
+                    body=base64.b64encode(res.content).decode(),
+                )
+            )
+
         return Ok(
             HttpResponse(
                 status=res.status_code,
                 statusText=res.reason_phrase,
-                headers=dict(res.headers),
+                headers=GenericMap(dict(res.headers)),
                 body=res.text,
             )
         )
@@ -95,11 +119,21 @@ class HttpPlugin(PluginModule[None, HttpResponse]):
         else:
             res = await self.client.post(args["url"])
 
+        if args["request"] is not None and args["request"]["responseType"] == HttpResponseType.BINARY:
+            return Ok(
+                HttpResponse(
+                    status=res.status_code,
+                    statusText=res.reason_phrase,
+                    headers=GenericMap(dict(res.headers)),
+                    body=base64.b64encode(res.content).decode(),
+                )
+            )
+
         return Ok(
             HttpResponse(
                 status=res.status_code,
                 statusText=res.reason_phrase,
-                headers=dict(res.headers),
+                headers=GenericMap(dict(res.headers)),
                 body=res.text,
             )
         )

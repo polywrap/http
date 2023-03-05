@@ -20,20 +20,6 @@ async def test_plugin():
 
     config = PolywrapClientConfig(resolver=resolver)
     client = PolywrapClient(config)
-    #     wrapper = wrapper_res.unwrap()
-    #     res = await wrapper.invoke(InvokerOptions(uri=Uri("plugin/http"), method="get", args={
-    #         "url": "https://httpbin.org/get"
-    #     }), client)
-
-    #     print(res)
-
-    #     if res.is_err():
-    #         print(res.unwrap_err())
-    #         assert 1 == 2
-    #     else:
-    #         print(res.unwrap())
-    #         assert 2 == 3
-
     result = await client.invoke(
         InvokerOptions(
             uri=Uri("plugin/http"),
