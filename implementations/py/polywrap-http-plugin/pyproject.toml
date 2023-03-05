@@ -1,0 +1,57 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "polywrap-http-plugin"
+version = "0.1.0a2"
+description = ""
+authors = ["Niraj Kamdar <niraj@polywrap.io>"]
+readme = "README.md"
+packages = [{include = "polywrap_http_plugin"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+polywrap-client = "0.1.0a11"
+polywrap-plugin = "0.1.0a11"
+httpx = "^0.23.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+pytest = "^7.2.1"
+pytest-asyncio = "^0.20.3"
+isort = "^5.12.0"
+bandit = "^1.7.4"
+pyright = "^1.1.296"
+pylint = "^2.16.3"
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.black]
+target-version = ["py310"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+reportShadowedImports = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = [
+    "tests"
+]
+
+[tool.pylint]
+disable = [
+    "too-many-return-statements",
+]
+ignore = [
+    "tests/"
+]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.pydocstyle]
+# default
