@@ -1,0 +1,6 @@
+# TODO: change back to "ens/wraps.eth:http@1.1.0" when this issue is fixed:
+# https://github.com/polywrap/toolchain/issues/1598
+
+#import { Module } into Http from "ipfs/Qmb7k3fZq8sPQpBtL1NWBNdudKoj44hrB85fANUo6wHExK"
+
+type Module implements Http_Module { }
