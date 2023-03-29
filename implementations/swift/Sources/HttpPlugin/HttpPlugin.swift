@@ -1,10 +1,12 @@
 import Foundation
 
-public struct ArgsGet {
+import PolywrapClient
+
+public struct ArgsGet: Codable {
     var url: String
     var request: Request?
 
-    init(url: String, request: Request? = nil) {
+    public init(url: String, request: Request? = nil) {
         self.url = url
         self.request = request
     }
@@ -14,20 +16,20 @@ public struct ArgsPost {
     var url: String
     var request: Request?
     
-    init(url: String, request: Request? = nil) {
+    public init(url: String, request: Request? = nil) {
         self.url = url
         self.request = request
     }
 }
 
-public struct Response {
+public struct Response: Codable {
     var status: Int
     var statusText: String
     var headers: Dictionary<String, String>?
     var body: String?
 }
 
-public struct Request {
+public struct Request: Codable {
     var headers: Dictionary<String, String>?
     var urlParams: Dictionary<String, String>?
     var responseType: ResponseType
@@ -35,7 +37,7 @@ public struct Request {
     var formData: [FormDataEntry]?
     var timeout: UInt32?
     
-    init(
+    public init(
         headers: Dictionary<String, String>? = nil,
         urlParams: Dictionary<String, String>? = nil,
         responseType: ResponseType,
@@ -52,12 +54,12 @@ public struct Request {
     }
 }
 
-public enum ResponseType {
+public enum ResponseType: Codable {
     case TEXT
     case BINARY
 }
 
-public struct FormDataEntry {
+public struct FormDataEntry: Codable {
     var name: String
     var value: String?
     var fileName: String?
@@ -68,20 +70,21 @@ public enum PluginError: Error {
     case BadRequest
 }
 
-public class HttpPlugin {
-    public init() {
+public class HttpPlugin: Plugin {
+    public override init() {
+        super.init()
+        super.addMethod(name: "get", closure: get)
     }
     
-    public func get(_ args: ArgsGet) async throws -> Response {
-        return try await withCheckedThrowingContinuation{ continuation in
+    public func get(_ args: ArgsGet) async -> Response {
+        return await withCheckedContinuation{ continuation in
             get(args: args) { result in
                 switch result {
                 case .success(let value):
                     continuation.resume(returning: value)
                     
                 case .failure(let error):
-                    continuation.resume(throwing: error)
-                    
+                    print(error)
                 }
             }
         }
