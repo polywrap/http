@@ -17,3 +17,6 @@ bin
 pkg
 wasm-pack.log
 .env
+**/__pycache__/
+.pytest_cache/
+dist/

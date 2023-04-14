@@ -1,0 +1,9 @@
+{
+  "name": "@polywrap/python-http-plugin",
+  "description": "Polywrap Python Http Plugin",
+  "version": "0.10.0-pre.7",
+  "private": true,
+  "devDependencies": {
+    "polywrap": "0.10.0-pre.7"
+  }
+}
