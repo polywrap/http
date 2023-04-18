@@ -1,13 +1,12 @@
 import { httpPlugin } from "../..";
 import { Http_Response } from "../../wrap";
 
-import { PolywrapClient } from "@polywrap/client-js";
-import { UriResolver } from "@polywrap/uri-resolvers-js";
+import { PolywrapClient, ClientConfigBuilder } from "@polywrap/client-js";
 
 import nock from "nock";
-import {Uri, WrapError} from "@polywrap/core-js";
+import { WrapError } from "@polywrap/core-js";
 import { initTestEnvironment, stopTestEnvironment, providers } from "@polywrap/test-env-js";
-import {pluginUri} from "../helpers/getClient";
+import { pluginUri } from "../helpers/getClient";
 
 jest.setTimeout(360000);
 
@@ -25,13 +24,10 @@ describe("e2e tests for HttpPlugin", () => {
 
   beforeEach(() => {
     polywrapClient = new PolywrapClient(
-      {
-        resolver: UriResolver.from({
-          uri: Uri.from(pluginUri),
-          package: httpPlugin({}),
-        }),
-      },
-      { noDefaults: true }
+      new ClientConfigBuilder()
+        .addPackage(
+          pluginUri, httpPlugin({})
+        ).build()
     );
   });
 
