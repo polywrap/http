@@ -43,6 +43,9 @@ target-version = ["py310"]
 [tool.pyright]
 typeCheckingMode = "strict"
 reportShadowedImports = false
+exclude = [
+    "**/wrap/"
+]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

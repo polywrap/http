@@ -21,10 +21,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Read VERSION into env.RELEASE_VERSION
+      - name: Read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
         working-directory: ./implementations/py
-        run: |
-          echo RELEASE_VERSION=$(poetry version | awk '{print $2}') >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Install dependencies
+        run: yarn install --nonInteractive --frozen-lockfile --prefer-offline
+        working-directory: ./implementations/py
+
+      - name: Codegen
+        run: yarn codegen
+        working-directory: ./implementations/py
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
