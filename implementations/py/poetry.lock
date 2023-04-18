@@ -23,14 +23,14 @@ trio = ["trio (>=0.16,<0.22)"]
 
 [[package]]
 name = "astroid"
-version = "2.15.2"
+version = "2.15.3"
 description = "An abstract syntax tree for Python with inference support."
 category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 files = [
-    {file = "astroid-2.15.2-py3-none-any.whl", hash = "sha256:dea89d9f99f491c66ac9c04ebddf91e4acf8bd711722175fe6245c0725cc19bb"},
-    {file = "astroid-2.15.2.tar.gz", hash = "sha256:6e61b85c891ec53b07471aec5878f4ac6446a41e590ede0f2ce095f39f7d49dd"},
+    {file = "astroid-2.15.3-py3-none-any.whl", hash = "sha256:f11e74658da0f2a14a8d19776a8647900870a63de71db83713a8e77a6af52662"},
+    {file = "astroid-2.15.3.tar.gz", hash = "sha256:44224ad27c54d770233751315fa7f74c46fa3ee0fab7beef1065f99f09897efe"},
 ]
 
 [package.dependencies]
@@ -169,6 +169,18 @@ files = [
 graph = ["objgraph (>=1.7.2)"]
 
 [[package]]
+name = "distlib"
+version = "0.3.6"
+description = "Distribution utilities"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "distlib-0.3.6-py2.py3-none-any.whl", hash = "sha256:f35c4b692542ca110de7ef0bea44d73981caeb34ca0b9b6b2e6d7790dda8f80e"},
+    {file = "distlib-0.3.6.tar.gz", hash = "sha256:14bad2d9b04d3a36127ac97f30b12a19268f211063d8f8ee4f47108896e11b46"},
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.1.1"
 description = "Backport of PEP 654 (exception groups)"
@@ -182,6 +194,22 @@ files = [
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[[package]]
+name = "filelock"
+version = "3.11.0"
+description = "A platform independent file lock."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "filelock-3.11.0-py3-none-any.whl", hash = "sha256:f08a52314748335c6460fc8fe40cd5638b85001225db78c2aa01c8c0db83b318"},
+    {file = "filelock-3.11.0.tar.gz", hash = "sha256:3618c0da67adcc0506b015fd11ef7faf1b493f0b40d87728e19986b536890c37"},
+]
+
+[package.extras]
+docs = ["furo (>=2023.3.27)", "sphinx (>=6.1.3)", "sphinx-autodoc-typehints (>=1.22,!=1.23.4)"]
+testing = ["covdefaults (>=2.3)", "coverage (>=7.2.2)", "diff-cover (>=7.5)", "pytest (>=7.2.2)", "pytest-cov (>=4)", "pytest-mock (>=3.10)", "pytest-timeout (>=2.1)"]
 
 [[package]]
 name = "gitdb"
@@ -578,80 +606,80 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "polywrap-client"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_client-0.1.0a28-py3-none-any.whl", hash = "sha256:9d0d22840e6c1d370933e21ed81af44421c86f238cf7583869dc89c48daa216a"},
-    {file = "polywrap_client-0.1.0a28.tar.gz", hash = "sha256:2b28ac962b92cdea36125dd972eb99fc8ee754555730ad05303d288850d8deae"},
+    {file = "polywrap_client-0.1.0a29-py3-none-any.whl", hash = "sha256:59cce6ec8105a4cb7da03a8db335068f1b747511b3334191feb2886b0391ab5a"},
+    {file = "polywrap_client-0.1.0a29.tar.gz", hash = "sha256:11cfa8a068980c772becca08597ef62c125411def87e125bae5df85b1c93c209"},
 ]
 
 [package.dependencies]
-polywrap-core = ">=0.1.0a28,<0.2.0"
-polywrap-manifest = ">=0.1.0a28,<0.2.0"
-polywrap-msgpack = ">=0.1.0a28,<0.2.0"
-polywrap-uri-resolvers = ">=0.1.0a28,<0.2.0"
+polywrap-core = ">=0.1.0a29,<0.2.0"
+polywrap-manifest = ">=0.1.0a29,<0.2.0"
+polywrap-msgpack = ">=0.1.0a29,<0.2.0"
+polywrap-uri-resolvers = ">=0.1.0a29,<0.2.0"
 
 [[package]]
 name = "polywrap-client-config-builder"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_client_config_builder-0.1.0a28-py3-none-any.whl", hash = "sha256:008c70092348441087e9dd1f042d4a14d72fc1f1c5cf5011b3ee9645d61026f3"},
-    {file = "polywrap_client_config_builder-0.1.0a28.tar.gz", hash = "sha256:257d0c1c04b72456cb57b596b20c82035573d37eb23702bdc828a28dd90791f2"},
+    {file = "polywrap_client_config_builder-0.1.0a29-py3-none-any.whl", hash = "sha256:4238ebd9f459c68afa860453d08725e31fd217bc52e25ef9562878bf77f51190"},
+    {file = "polywrap_client_config_builder-0.1.0a29.tar.gz", hash = "sha256:e5c04c64dbc20cbd587cccffd5a2a557d4214126d8587d033c2f30948f67375a"},
 ]
 
 [package.dependencies]
-polywrap-core = ">=0.1.0a28,<0.2.0"
-polywrap-uri-resolvers = ">=0.1.0a28,<0.2.0"
+polywrap-core = ">=0.1.0a29,<0.2.0"
+polywrap-uri-resolvers = ">=0.1.0a29,<0.2.0"
 
 [[package]]
 name = "polywrap-core"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_core-0.1.0a28-py3-none-any.whl", hash = "sha256:addf36c93c87500961619ed0b90075b7412f6ef9608a654d56255fb338732211"},
-    {file = "polywrap_core-0.1.0a28.tar.gz", hash = "sha256:ef165e4e1b02de2df8711b56a144a9070b687efe565ab8faa5d659f621b3fcb4"},
+    {file = "polywrap_core-0.1.0a29-py3-none-any.whl", hash = "sha256:ea3111a0a2a4287c0f7a180fd7bb024530e720cd5ec97767b52502679d42a097"},
+    {file = "polywrap_core-0.1.0a29.tar.gz", hash = "sha256:b879c8b621eaa4ae5ad1cc48a6b304596fe9586163395782584207886e793eba"},
 ]
 
 [package.dependencies]
-polywrap-manifest = ">=0.1.0a28,<0.2.0"
-polywrap-msgpack = ">=0.1.0a28,<0.2.0"
+polywrap-manifest = ">=0.1.0a29,<0.2.0"
+polywrap-msgpack = ">=0.1.0a29,<0.2.0"
 
 [[package]]
 name = "polywrap-manifest"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = "WRAP manifest"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_manifest-0.1.0a28-py3-none-any.whl", hash = "sha256:6caf12b5fe47ea36754e12f9b389c8f444e76abe59580dd7696a632cec50aa90"},
-    {file = "polywrap_manifest-0.1.0a28.tar.gz", hash = "sha256:a7e6ee4667d0f0fd30b48d0833a80de1e023ce30e4f3b41dd94a0717e4f9d266"},
+    {file = "polywrap_manifest-0.1.0a29-py3-none-any.whl", hash = "sha256:1d13b2075aca5a65c86b9d0ec9c35f564eab4c9cc8caa77674ed720193dcd60b"},
+    {file = "polywrap_manifest-0.1.0a29.tar.gz", hash = "sha256:9f2bcf10b7ffd73a750e712bee8a24f5d6e0cd59a3d131a7d32b37b2366075c2"},
 ]
 
 [package.dependencies]
-polywrap-msgpack = ">=0.1.0a28,<0.2.0"
+polywrap-msgpack = ">=0.1.0a29,<0.2.0"
 pydantic = ">=1.10.2,<2.0.0"
 
 [[package]]
 name = "polywrap-msgpack"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = "WRAP msgpack encoding"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_msgpack-0.1.0a28-py3-none-any.whl", hash = "sha256:0cfae5da732c219648b391ed3835715c03f510bd7d96045916f1d1f0e42a38a4"},
-    {file = "polywrap_msgpack-0.1.0a28.tar.gz", hash = "sha256:3a73a4d0c4f820509e992abec326e1203519e880837c07eef84a2f5e600c82b5"},
+    {file = "polywrap_msgpack-0.1.0a29-py3-none-any.whl", hash = "sha256:898af76cb278630c0e826ffd1052d9cc1fa832082046ebf8d96f9eddacba7ba1"},
+    {file = "polywrap_msgpack-0.1.0a29.tar.gz", hash = "sha256:286c93c3bdc97c18c5afcd8be93b286012ffb937d75f15336f6293b632070c89"},
 ]
 
 [package.dependencies]
@@ -659,56 +687,68 @@ msgpack = ">=1.0.4,<2.0.0"
 
 [[package]]
 name = "polywrap-plugin"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = "Plugin package"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_plugin-0.1.0a28-py3-none-any.whl", hash = "sha256:61ef94f90608e57eabd9a237155ee8349fe986faec722dd5de9d549df6dc7663"},
-    {file = "polywrap_plugin-0.1.0a28.tar.gz", hash = "sha256:7fbbc5b26bba1fc036185d7b42f17f92c380db316e875a7f207f9b473bb4dc02"},
+    {file = "polywrap_plugin-0.1.0a29-py3-none-any.whl", hash = "sha256:85896cd27cd89ba1c52447afd6084130af0a74d9c69dc59180608d40b725c841"},
+    {file = "polywrap_plugin-0.1.0a29.tar.gz", hash = "sha256:7797ff07c08eff395d17db22d7bcbe1431b0b32bcf6a4c3ab09521ac7dcf4f0a"},
 ]
 
 [package.dependencies]
-polywrap-core = ">=0.1.0a28,<0.2.0"
-polywrap-manifest = ">=0.1.0a28,<0.2.0"
-polywrap-msgpack = ">=0.1.0a28,<0.2.0"
+polywrap-core = ">=0.1.0a29,<0.2.0"
+polywrap-manifest = ">=0.1.0a29,<0.2.0"
+polywrap-msgpack = ">=0.1.0a29,<0.2.0"
 
 [[package]]
 name = "polywrap-uri-resolvers"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_uri_resolvers-0.1.0a28-py3-none-any.whl", hash = "sha256:62b72fbe3dbd817507dbaea947ac489d18deaccba0f74b4fb1d6593342ad78e4"},
-    {file = "polywrap_uri_resolvers-0.1.0a28.tar.gz", hash = "sha256:fd6cbaf88d0660532883e5e5ad162e3646f62970540e54a31d7bc8da2c8dc196"},
+    {file = "polywrap_uri_resolvers-0.1.0a29-py3-none-any.whl", hash = "sha256:d8e1eb8284640dbcff754ef81d7558d241d4b7c23334be93596bd924cc1ab502"},
+    {file = "polywrap_uri_resolvers-0.1.0a29.tar.gz", hash = "sha256:0c1784f03ad54000b3caf46ebeaaeae50cfb4070134e66ce67e270977e99e80c"},
 ]
 
 [package.dependencies]
-polywrap-core = ">=0.1.0a28,<0.2.0"
-polywrap-wasm = ">=0.1.0a28,<0.2.0"
+polywrap-core = ">=0.1.0a29,<0.2.0"
+polywrap-wasm = ">=0.1.0a29,<0.2.0"
 
 [[package]]
 name = "polywrap-wasm"
-version = "0.1.0a28"
+version = "0.1.0a29"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "polywrap_wasm-0.1.0a28-py3-none-any.whl", hash = "sha256:9a39a85d1a32f3530c64a6d7871ac3c23a9f206a765996e36aa9ebc2936cd22d"},
-    {file = "polywrap_wasm-0.1.0a28.tar.gz", hash = "sha256:4411e4d6f6457ab67bf601875067b42f2ec2e7be1ac83102f3d30e61970c98b3"},
+    {file = "polywrap_wasm-0.1.0a29-py3-none-any.whl", hash = "sha256:462ae2d043abbed45f94b9615339834029af7d503d2f8e6037959fef953edd7b"},
+    {file = "polywrap_wasm-0.1.0a29.tar.gz", hash = "sha256:97c2bb2c057e260376a99e5cea44ce2a78097c1ee670be1b6f0269f233f772fe"},
 ]
 
 [package.dependencies]
-polywrap-core = ">=0.1.0a28,<0.2.0"
-polywrap-manifest = ">=0.1.0a28,<0.2.0"
-polywrap-msgpack = ">=0.1.0a28,<0.2.0"
+polywrap-core = ">=0.1.0a29,<0.2.0"
+polywrap-manifest = ">=0.1.0a29,<0.2.0"
+polywrap-msgpack = ">=0.1.0a29,<0.2.0"
 unsync = ">=1.4.0,<2.0.0"
 unsync-stubs = ">=0.1.2,<0.2.0"
 wasmtime = ">=6.0.0,<7.0.0"
+
+[[package]]
+name = "py"
+version = "1.11.0"
+description = "library with cross-python path, ini-parsing, io, code, log facilities"
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+files = [
+    {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
+    {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
+]
 
 [[package]]
 name = "pydantic"
@@ -762,6 +802,24 @@ typing-extensions = ">=4.2.0"
 [package.extras]
 dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
+
+[[package]]
+name = "pydocstyle"
+version = "6.3.0"
+description = "Python docstring style checker"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pydocstyle-6.3.0-py3-none-any.whl", hash = "sha256:118762d452a49d6b05e194ef344a55822987a462831ade91ec5c06fd2169d019"},
+    {file = "pydocstyle-6.3.0.tar.gz", hash = "sha256:7ce43f0c0ac87b07494eb9c0b462c0b73e6ff276807f204d6b53edc72b7e44e1"},
+]
+
+[package.dependencies]
+snowballstemmer = ">=2.2.0"
+
+[package.extras]
+toml = ["tomli (>=1.2.3)"]
 
 [[package]]
 name = "pygments"
@@ -828,14 +886,14 @@ dev = ["twine (>=3.4.1)"]
 
 [[package]]
 name = "pytest"
-version = "7.3.0"
+version = "7.3.1"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-7.3.0-py3-none-any.whl", hash = "sha256:933051fa1bfbd38a21e73c3960cebdad4cf59483ddba7696c48509727e17f201"},
-    {file = "pytest-7.3.0.tar.gz", hash = "sha256:58ecc27ebf0ea643ebfdf7fb1249335da761a00c9f955bcd922349bcb68ee57d"},
+    {file = "pytest-7.3.1-py3-none-any.whl", hash = "sha256:3799fa815351fea3a5e96ac7e503a96fa51cc9942c3753cda7651b93c1cfa362"},
+    {file = "pytest-7.3.1.tar.gz", hash = "sha256:434afafd78b1d78ed0addf160ad2b77a30d35d4bdf8af234fe621919d9ed15e3"},
 ]
 
 [package.dependencies]
@@ -867,6 +925,24 @@ pytest = ">=6.1.0"
 [package.extras]
 docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1.0)"]
 testing = ["coverage (>=6.2)", "flaky (>=3.5.0)", "hypothesis (>=5.7.1)", "mypy (>=0.931)", "pytest-trio (>=0.7.0)"]
+
+[[package]]
+name = "pytest-mock"
+version = "3.10.0"
+description = "Thin-wrapper around the mock package for easier use with pytest"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pytest-mock-3.10.0.tar.gz", hash = "sha256:fbbdb085ef7c252a326fd8cdcac0aa3b1333d8811f131bdcc701002e1be7ed4f"},
+    {file = "pytest_mock-3.10.0-py3-none-any.whl", hash = "sha256:f4c973eeae0282963eb293eb173ce91b091a79c1334455acfac9ddee8a1c784b"},
+]
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[package.extras]
+dev = ["pre-commit", "pytest-asyncio", "tox"]
 
 [[package]]
 name = "pyyaml"
@@ -973,6 +1049,18 @@ testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8 (<5)", "flake8-202
 testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+
+[[package]]
 name = "smmap"
 version = "5.0.0"
 description = "A pure Python implementation of a sliding window memory map manager"
@@ -997,6 +1085,18 @@ files = [
 ]
 
 [[package]]
+name = "snowballstemmer"
+version = "2.2.0"
+description = "This package provides 29 stemmers for 28 languages generated from Snowball algorithms."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "snowballstemmer-2.2.0-py2.py3-none-any.whl", hash = "sha256:c8e1716e83cc398ae16824e5572ae04e0d9fc2c6b985fb0f900f5f0c96ecba1a"},
+    {file = "snowballstemmer-2.2.0.tar.gz", hash = "sha256:09b16deb8547d3412ad7b590689584cd0fe25ec8db3be37788be3810cbf19cb1"},
+]
+
+[[package]]
 name = "stevedore"
 version = "5.0.0"
 description = "Manage dynamic plugins for Python applications"
@@ -1010,6 +1110,18 @@ files = [
 
 [package.dependencies]
 pbr = ">=2.0.0,<2.1.0 || >2.1.0"
+
+[[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "dev"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
+    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
+]
 
 [[package]]
 name = "tomli"
@@ -1034,6 +1146,52 @@ files = [
     {file = "tomlkit-0.11.7-py3-none-any.whl", hash = "sha256:5325463a7da2ef0c6bbfefb62a3dc883aebe679984709aee32a317907d0a8d3c"},
     {file = "tomlkit-0.11.7.tar.gz", hash = "sha256:f392ef70ad87a672f02519f99967d28a4d3047133e2d1df936511465fbb3791d"},
 ]
+
+[[package]]
+name = "tox"
+version = "3.28.0"
+description = "tox is a generic virtualenv management and test command line tool"
+category = "dev"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+files = [
+    {file = "tox-3.28.0-py2.py3-none-any.whl", hash = "sha256:57b5ab7e8bb3074edc3c0c0b4b192a4f3799d3723b2c5b76f1fa9f2d40316eea"},
+    {file = "tox-3.28.0.tar.gz", hash = "sha256:d0d28f3fe6d6d7195c27f8b054c3e99d5451952b54abdae673b71609a581f640"},
+]
+
+[package.dependencies]
+colorama = {version = ">=0.4.1", markers = "platform_system == \"Windows\""}
+filelock = ">=3.0.0"
+packaging = ">=14"
+pluggy = ">=0.12.0"
+py = ">=1.4.17"
+six = ">=1.14.0"
+tomli = {version = ">=2.0.1", markers = "python_version >= \"3.7\" and python_version < \"3.11\""}
+virtualenv = ">=16.0.0,<20.0.0 || >20.0.0,<20.0.1 || >20.0.1,<20.0.2 || >20.0.2,<20.0.3 || >20.0.3,<20.0.4 || >20.0.4,<20.0.5 || >20.0.5,<20.0.6 || >20.0.6,<20.0.7 || >20.0.7"
+
+[package.extras]
+docs = ["pygments-github-lexers (>=0.0.5)", "sphinx (>=2.0.0)", "sphinxcontrib-autoprogram (>=0.1.5)", "towncrier (>=18.5.0)"]
+testing = ["flaky (>=3.4.0)", "freezegun (>=0.3.11)", "pathlib2 (>=2.3.3)", "psutil (>=5.6.1)", "pytest (>=4.0.0)", "pytest-cov (>=2.5.1)", "pytest-mock (>=1.10.0)", "pytest-randomly (>=1.0.0)"]
+
+[[package]]
+name = "tox-poetry"
+version = "0.4.1"
+description = "Tox poetry plugin"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "tox-poetry-0.4.1.tar.gz", hash = "sha256:2395808e1ce487b5894c10f2202e14702bfa6d6909c0d1e525170d14809ac7ef"},
+    {file = "tox_poetry-0.4.1-py2.py3-none-any.whl", hash = "sha256:11d9cd4e51d4cd9484b3ba63f2650ab4cfb4096e5f0682ecf561ddfc3c8e8c92"},
+]
+
+[package.dependencies]
+pluggy = "*"
+toml = "*"
+tox = {version = ">=3.7.0", markers = "python_version >= \"3\""}
+
+[package.extras]
+test = ["coverage", "pycodestyle", "pylint", "pytest"]
 
 [[package]]
 name = "typing-extensions"
@@ -1069,6 +1227,27 @@ files = [
     {file = "unsync_stubs-0.1.2-py3-none-any.whl", hash = "sha256:a65aa80480c6b7ba985681d3833a202f0a33e159801c2a747bfcf6a0fb328a07"},
     {file = "unsync_stubs-0.1.2.tar.gz", hash = "sha256:9f5b7d5cd35a03e36b735be2ba5f1c2c3848c613ad124ccbf5fc0c3cdb21cc50"},
 ]
+
+[[package]]
+name = "virtualenv"
+version = "20.21.0"
+description = "Virtual Python Environment builder"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "virtualenv-20.21.0-py3-none-any.whl", hash = "sha256:31712f8f2a17bd06234fa97fdf19609e789dd4e3e4bf108c3da71d710651adbc"},
+    {file = "virtualenv-20.21.0.tar.gz", hash = "sha256:f50e3e60f990a0757c9b68333c9fdaa72d7188caa417f96af9e52407831a3b68"},
+]
+
+[package.dependencies]
+distlib = ">=0.3.6,<1"
+filelock = ">=3.4.1,<4"
+platformdirs = ">=2.4,<4"
+
+[package.extras]
+docs = ["furo (>=2022.12.7)", "proselint (>=0.13)", "sphinx (>=6.1.3)", "sphinx-argparse (>=0.4)", "sphinxcontrib-towncrier (>=0.2.1a0)", "towncrier (>=22.12)"]
+test = ["covdefaults (>=2.2.2)", "coverage (>=7.1)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7)", "packaging (>=23)", "pytest (>=7.2.1)", "pytest-env (>=0.8.1)", "pytest-freezegun (>=0.4.2)", "pytest-mock (>=3.10)", "pytest-randomly (>=3.12)", "pytest-timeout (>=2.1)"]
 
 [[package]]
 name = "wasmtime"
@@ -1177,4 +1356,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4a76b0e25dee7a9ea96e1a5c4a13598b9a8d52865bc5e29ee187b207de31f7f0"
+content-hash = "10cc711ea7eea20a3efcb5fe2b2c665eb911aacef1f7565964973a9adda92c04"

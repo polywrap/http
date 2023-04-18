@@ -1,18 +1,29 @@
+"""This package contains the HTTP plugin."""
 import base64
 from typing import Optional, cast
 
-from httpx import AsyncClient, Response as HttpxResponse
-from polywrap_plugin import PluginPackage
+from httpx import AsyncClient
+from httpx import Response as HttpxResponse
 from polywrap_core import InvokerClient, UriPackageOrWrapper
 from polywrap_msgpack import GenericMap
+from polywrap_plugin import PluginPackage
 
-from .wrap import HttpHttpResponse, HttpHttpResponseType, ArgsGet, ArgsPost, manifest, Module
+from .wrap import (
+    ArgsGet,
+    ArgsPost,
+    HttpHttpResponse,
+    HttpHttpResponseType,
+    Module,
+    manifest,
+)
 
 
-def isResponseBinary(args: ArgsGet) -> bool:
+def _is_response_binary(args: ArgsGet) -> bool:
     if args.get("request") is None:
         return False
     if not args["request"]:
+        return False
+    if not args["request"].get("responseType"):
         return False
     if args["request"]["responseType"] == 1:
         return True
@@ -22,25 +33,31 @@ def isResponseBinary(args: ArgsGet) -> bool:
 
 
 class HttpPlugin(Module[None]):
+    """HTTP plugin."""
+
     def __init__(self):
+        """Initialize the HTTP plugin."""
         super().__init__(None)
         self.client = AsyncClient()
 
-    async def get(self, args: ArgsGet, client: InvokerClient[UriPackageOrWrapper], env: None) -> Optional[HttpHttpResponse]:
+    async def get(
+        self, args: ArgsGet, client: InvokerClient[UriPackageOrWrapper], env: None
+    ) -> Optional[HttpHttpResponse]:
+        """Make a GET request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
             res = await self.client.get(args["url"])
         elif args["request"] is not None:
             res = await self.client.get(
                 args["url"],
-                params=args["request"]["urlParams"],
-                headers=args["request"]["headers"],
-                timeout=cast(float, args["request"]["timeout"]),
+                params=args["request"].get("urlParams"),
+                headers=args["request"].get("headers"),
+                timeout=cast(float, args["request"].get("timeout")),
             )
         else:
             res = await self.client.get(args["url"])
 
-        if isResponseBinary(args):
+        if _is_response_binary(args):
             return HttpHttpResponse(
                 status=res.status_code,
                 statusText=res.reason_phrase,
@@ -55,7 +72,10 @@ class HttpPlugin(Module[None]):
             body=res.text,
         )
 
-    async def post(self, args: ArgsPost, client: InvokerClient[UriPackageOrWrapper], env: None) -> Optional[HttpHttpResponse]:
+    async def post(
+        self, args: ArgsPost, client: InvokerClient[UriPackageOrWrapper], env: None
+    ) -> Optional[HttpHttpResponse]:
+        """Make a POST request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
             res = await self.client.post(args["url"])
@@ -68,14 +88,14 @@ class HttpPlugin(Module[None]):
             res = await self.client.post(
                 args["url"],
                 content=content,
-                params=args["request"]["urlParams"],
-                headers=args["request"]["headers"],
-                timeout=cast(float, args["request"]["timeout"]),
+                params=args["request"].get("urlParams"),
+                headers=args["request"].get("headers"),
+                timeout=cast(float, args["request"].get("timeout")),
             )
         else:
             res = await self.client.post(args["url"])
 
-        if args["request"] is not None and args["request"]["responseType"] == HttpHttpResponseType.BINARY:
+        if _is_response_binary(args):
             return HttpHttpResponse(
                 status=res.status_code,
                 statusText=res.reason_phrase,
@@ -84,12 +104,13 @@ class HttpPlugin(Module[None]):
             )
 
         return HttpHttpResponse(
-                status=res.status_code,
-                statusText=res.reason_phrase,
-                headers=GenericMap(dict(res.headers)),
-                body=res.text,
-            )
+            status=res.status_code,
+            statusText=res.reason_phrase,
+            headers=GenericMap(dict(res.headers)),
+            body=res.text,
+        )
 
 
 def http_plugin():
+    """Factory function for the HTTP plugin."""
     return PluginPackage(module=HttpPlugin(), manifest=manifest)
