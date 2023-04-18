@@ -34,7 +34,7 @@ result = await client.invoke(
 Below is sample invocation of the `POST` request with custom request headers and query parameters (`urlParams`). It is also possible to set request body as shown below.
 
 ```python
-response = await polywrap_client.invoke(
+response = await client.invoke(
     InvokerOptions(
         uri="wrap://ens/http.polywrap.eth",
         method="post",
