@@ -1,6 +1,4 @@
-from typing import Any
 from pytest import fixture
-from pytest_mock import MockerFixture
 
 from polywrap_http_plugin import http_plugin
 from polywrap_client import PolywrapClient

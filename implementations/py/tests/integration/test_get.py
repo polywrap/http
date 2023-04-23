@@ -1,13 +1,13 @@
 from base64 import b64decode
 import json
 
-from polywrap_http_plugin import HttpHttpResponse
+from polywrap_http_plugin import Response
 from polywrap_client import PolywrapClient
 from polywrap_core import Uri, InvokerOptions
 
 
 async def test_simple_get(client: PolywrapClient):
-    response: HttpHttpResponse = await client.invoke(
+    response: Response = await client.invoke(
         InvokerOptions(
             uri=Uri.from_str("wrapper/integration"),
             method="get",
@@ -21,7 +21,7 @@ async def test_simple_get(client: PolywrapClient):
 
 
 async def test_params_get(client: PolywrapClient):
-    response: HttpHttpResponse = await client.invoke(
+    response: Response = await client.invoke(
         InvokerOptions(
             uri=Uri.from_str("wrapper/integration"),
             method="get",
@@ -43,7 +43,7 @@ async def test_params_get(client: PolywrapClient):
 
 
 async def test_binary_get(client: PolywrapClient):
-    response: HttpHttpResponse = await client.invoke(
+    response: Response = await client.invoke(
         InvokerOptions(
             uri=Uri.from_str("wrapper/integration"),
             method="get",

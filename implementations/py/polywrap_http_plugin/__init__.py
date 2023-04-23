@@ -11,8 +11,8 @@ from polywrap_plugin import PluginPackage
 from .wrap import (
     ArgsGet,
     ArgsPost,
-    HttpHttpResponse,
-    HttpHttpResponseType,
+    Response,
+    ResponseType,
     Module,
     manifest,
 )
@@ -29,7 +29,7 @@ def _is_response_binary(args: ArgsGet) -> bool:
         return True
     if args["request"]["responseType"] == "BINARY":
         return True
-    return args["request"]["responseType"] == HttpHttpResponseType.BINARY
+    return args["request"]["responseType"] == ResponseType.BINARY
 
 
 class HttpPlugin(Module[None]):
@@ -42,7 +42,7 @@ class HttpPlugin(Module[None]):
 
     async def get(
         self, args: ArgsGet, client: InvokerClient[UriPackageOrWrapper], env: None
-    ) -> Optional[HttpHttpResponse]:
+    ) -> Optional[Response]:
         """Make a GET request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
@@ -58,14 +58,14 @@ class HttpPlugin(Module[None]):
             res = await self.client.get(args["url"])
 
         if _is_response_binary(args):
-            return HttpHttpResponse(
+            return Response(
                 status=res.status_code,
                 statusText=res.reason_phrase,
                 headers=GenericMap(dict(res.headers)),
                 body=base64.b64encode(res.content).decode(),
             )
 
-        return HttpHttpResponse(
+        return Response(
             status=res.status_code,
             statusText=res.reason_phrase,
             headers=GenericMap(dict(res.headers)),
@@ -74,7 +74,7 @@ class HttpPlugin(Module[None]):
 
     async def post(
         self, args: ArgsPost, client: InvokerClient[UriPackageOrWrapper], env: None
-    ) -> Optional[HttpHttpResponse]:
+    ) -> Optional[Response]:
         """Make a POST request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
@@ -96,14 +96,14 @@ class HttpPlugin(Module[None]):
             res = await self.client.post(args["url"])
 
         if _is_response_binary(args):
-            return HttpHttpResponse(
+            return Response(
                 status=res.status_code,
                 statusText=res.reason_phrase,
                 headers=GenericMap(dict(res.headers)),
                 body=base64.b64encode(res.content).decode(),
             )
 
-        return HttpHttpResponse(
+        return Response(
             status=res.status_code,
             statusText=res.reason_phrase,
             headers=GenericMap(dict(res.headers)),
