@@ -13,7 +13,7 @@ jobs:
     name: http-plugin-py-cd
     if: |
       github.event.pull_request.merged &&
-      startsWith(github.event.pull_request.title, '[CD]') != true &&
+      startsWith(github.event.pull_request.title, '[CD]') == true &&
       github.event.pull_request.user.login != 'github-actions'
     runs-on: ubuntu-latest
     timeout-minutes: 60
