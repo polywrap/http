@@ -1,9 +1,15 @@
 [package]
 name = "http_plugin_rs"
-version = "0.1.0"
+version = "0.0.1-beta.1"
 license = "MIT"
 description = "Polywrap rust HTTP plugin"
 edition = "2021"
+
+include = [
+    "src/wrap/*",
+    "src/lib.rs",
+    "src/mapping.rs"
+]
 
 [dependencies]
 polywrap_core = { version = "0.1.4-alpha.2" }
