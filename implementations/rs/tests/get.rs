@@ -6,7 +6,10 @@ use polywrap_core::{
     client::ClientConfig, resolvers::uri_resolution_context::UriPackage, uri::Uri,
 };
 use polywrap_msgpack::msgpack;
-use polywrap_plugin::{package::PluginPackage, JSON::json};
+use polywrap_plugin::{
+    package::PluginPackage,
+    JSON::{from_str},
+};
 use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
 
@@ -29,11 +32,11 @@ fn get_client() -> PolywrapClient {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct ExpectedResponse {
-    data: String,
+    id: u32,
 }
 
 #[test]
-fn get_method() {
+fn simple_get() {
     let response = get_client()
         .invoke::<HttpResponse>(
             &Uri::try_from("plugin/http").unwrap(),
@@ -47,30 +50,29 @@ fn get_method() {
         .unwrap();
     assert_eq!(response.status, 200);
     assert_ne!(response.body, None);
+    let body: ExpectedResponse = from_str(&response.body.unwrap()).unwrap();
+    assert_eq!(body.id, 1);
 }
 
-#[test]
-fn post_method() {
-    let body = json!({
-        "id": "some",
-        "value": 123
-    });
-    let response = get_client()
-        .invoke::<HttpResponse>(
-            &Uri::try_from("plugin/http").unwrap(),
-            "post",
-            Some(&msgpack!({
-                "url": "https://jsonplaceholder.typicode.com/todos",
-                "request": {
-                    "responseType": "TEXT",
-                    "body": body.to_string()
-                }
-            })),
-            None,
-            None,
-        )
-        .unwrap();
-
-    assert_eq!(response.status, 201);
-    assert_ne!(response.body, None);
-}
+// #[test]
+// fn params_get() {
+//     let response = get_client()
+//         .invoke::<HttpResponse>(
+//             &Uri::try_from("plugin/http").unwrap(),
+//             "get",
+//             Some(&msgpack!({
+//                 "url": "https://jsonplaceholder.typicode.com/todos",
+//                 "request": {
+//                     "urlParams": {
+//                         "id": 1
+//                     }
+//                 }
+//             })),
+//             None,
+//             None,
+//         )
+//         .unwrap();
+//     assert_eq!(response.status, 200);
+//     assert_ne!(response.body, None);
+//     dbg!(&response.body);
+// }

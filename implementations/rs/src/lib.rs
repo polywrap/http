@@ -1,16 +1,18 @@
 use std::sync::Arc;
 
-use mapping::{parse_request, parse_response};
-use polywrap_core::{invoke::Invoker};
-use polywrap_plugin::{error::PluginError, implementor::plugin_impl, JSON};
-use wrap::{module::{Module, ArgsGet, ArgsPost}, types::{HttpHttpResponse as HttpResponse, HttpHttpResponseType as ResponseType}};
 use crate::wrap::wrap_info::get_manifest;
+use mapping::{parse_request, parse_response};
+use polywrap_core::invoke::Invoker;
+use polywrap_plugin::{error::PluginError, implementor::plugin_impl, JSON};
+use wrap::{
+    module::{ArgsGet, ArgsPost, Module},
+    types::{HttpHttpResponse as HttpResponse, HttpHttpResponseType as ResponseType},
+};
 pub mod mapping;
 pub mod wrap;
 
 #[derive(Debug)]
-pub struct HttpPlugin {
-}
+pub struct HttpPlugin {}
 
 #[plugin_impl]
 impl Module for HttpPlugin {
@@ -31,7 +33,7 @@ impl Module for HttpPlugin {
         };
 
         let parsed_response = parse_response(response, response_type)?;
-        
+
         Ok(Some(parsed_response))
     }
 
