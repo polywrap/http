@@ -8,14 +8,7 @@ from polywrap_core import InvokerClient, UriPackageOrWrapper
 from polywrap_msgpack import GenericMap
 from polywrap_plugin import PluginPackage
 
-from .wrap import (
-    ArgsGet,
-    ArgsPost,
-    Response,
-    ResponseType,
-    Module,
-    manifest,
-)
+from .wrap import ArgsGet, ArgsPost, Module, Response, ResponseType, manifest
 
 
 def _is_response_binary(args: ArgsGet) -> bool:
