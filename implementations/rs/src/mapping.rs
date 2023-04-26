@@ -1,8 +1,8 @@
 use crate::wrap::types::{
     HttpHttpRequest as Request, HttpHttpResponse as Response, HttpHttpResponseType as ResponseType,
 };
-use polywrap_msgpack::extensions::generic_map::GenericMap;
-use polywrap_plugin::error::PluginError;
+
+use polywrap_client::{msgpack::extensions::generic_map::GenericMap, plugin::error::PluginError};
 use std::collections::BTreeMap;
 
 pub enum RequestMethod {

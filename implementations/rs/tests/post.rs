@@ -1,12 +1,21 @@
 use http_plugin_rs::wrap::types::HttpHttpResponse as HttpResponse;
 use http_plugin_rs::HttpPlugin;
-use polywrap_client::client::PolywrapClient;
-use polywrap_core::resolvers::static_resolver::{StaticResolver, StaticResolverLike};
-use polywrap_core::{
-    client::ClientConfig, resolvers::uri_resolution_context::UriPackage, uri::Uri,
+use polywrap_client::{
+    client::PolywrapClient,
+    core::{
+        client::ClientConfig,
+        resolvers::{
+            static_resolver::{StaticResolver, StaticResolverLike},
+            uri_resolution_context::UriPackage,
+        },
+        uri::Uri,
+    },
+    msgpack::msgpack,
+    plugin::{
+        package::PluginPackage,
+        JSON::{from_str, json},
+    },
 };
-use polywrap_msgpack::msgpack;
-use polywrap_plugin::{package::PluginPackage, JSON::{json, from_str}};
 use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
 
