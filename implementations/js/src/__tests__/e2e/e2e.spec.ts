@@ -300,7 +300,6 @@ describe("e2e tests for HttpPlugin", () => {
     });
 
     test("successful request with form-data (simple)", async () => {
-      console.log(ipfsProvider);
       await new Promise<void>((resolve) => setTimeout(() => resolve(), 10000));
       const response = await polywrapClient.invoke<Response>({
         uri: pluginUri,
