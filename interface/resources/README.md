@@ -2,8 +2,8 @@
 
 | Version | URI | WRAP Version |
 |-|-|-|
-| 1.0.0 | [`wrap://ens/wrappers.polywrap.eth:http@1.0.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:http@1.0.0) | 0.1 |
-| 1.1.0 | [`wrap://ens/wrappers.polywrap.eth:http@1.1.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:http@1.1.0) | 0.1 |
+| 1.0.0 | [`wrap://ens/wraps.eth:http@1.0.0`](https://wrappers.io/v/ens/wraps.eth:http@1.0.0) | 0.1 |
+| 1.1.0 | [`wrap://ens/wraps.eth:http@1.1.0`](https://wrappers.io/v/ens/wraps.eth:http@1.1.0) | 0.1 |
 
 ## Interface
 ```graphql
@@ -53,9 +53,7 @@ type Module {
 
 ## Usage
 ```graphql
-#import { Module } into Http from "ens/wrappers.polywrap.eth:http@1.1.0"
-
-type Module implements Http_Module {}
+#import * from "ens/wraps.eth:http@1.1.0"
 ```
 
 And implement the `get` + `post` methods within your programming language of choice.

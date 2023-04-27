@@ -3,5 +3,5 @@ project:
   name: Http
   type: plugin/python
 source:
-  schema: ./schema.graphql
+  schema: ./polywrap.graphql
   module: ./polywrap_http_plugin/__init__.py
