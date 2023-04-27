@@ -1,5 +1,5 @@
 import { fromAxiosResponse, toAxiosRequestConfig } from "../../util";
-import { Http_ResponseTypeEnum } from "../../wrap";
+import { ResponseTypeEnum } from "../../wrap";
 
 describe("converting axios response", () => {
   test("response type: text", () => {
@@ -90,7 +90,7 @@ describe("creating axios config", () => {
   test("with url params", () => {
     const config = toAxiosRequestConfig({
       urlParams: new Map([["tag", "data"]]),
-      responseType: Http_ResponseTypeEnum.BINARY,
+      responseType: ResponseTypeEnum.BINARY,
       body: "body-content",
     });
 

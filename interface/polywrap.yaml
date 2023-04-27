@@ -3,7 +3,5 @@ project:
   name: http-interface
   type: interface
 source:
-  schema: ./src/schema.graphql
+  schema: ./polywrap.graphql
 resources: ./resources
-extensions:
-  deploy: ./polywrap.deploy.yaml
