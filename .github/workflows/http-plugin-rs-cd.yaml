@@ -45,7 +45,7 @@ jobs:
           override: true
 
       - name: Publish
-        run: cargo release --token {{ env.CRATES_TOKEN }}
+        run: cargo release --token {{ env.CRATES_TOKEN }} --allow-dirty
         working-directory: ./implementations/rs
         env:
           CRATES_TOKEN: ${{ secrets.POLYWRAP_BUILD_BOT_CRATES_PAT }}
