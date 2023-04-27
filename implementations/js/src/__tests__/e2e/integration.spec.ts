@@ -1,7 +1,7 @@
-import { Http_Response } from "../../wrap";
+import { Response } from "../../wrap";
 
 import { PolywrapClient } from "@polywrap/client-js";
-import { buildWrapper } from "@polywrap/test-env-js";
+import { Commands } from "@polywrap/cli-js";
 import nock from "nock";
 import { getClient } from "../helpers/getClient";
 
@@ -22,7 +22,7 @@ describe("e2e tests for HttpPlugin", () => {
     beforeAll(async () => {
       client = getClient();
 
-      await buildWrapper(wrapperPath, undefined, true);
+      await Commands.build({ }, { cwd: wrapperPath });
     });
 
     it("get", async () => {
@@ -36,7 +36,7 @@ describe("e2e tests for HttpPlugin", () => {
           "X-Response-Header": "resp-foo",
         });
 
-      const response = await client.invoke<Http_Response>({
+      const response = await client.invoke<Response>({
         uri,
         method: "get",
         args: {
@@ -65,7 +65,7 @@ describe("e2e tests for HttpPlugin", () => {
           "X-Response-Header": "resp-foo",
         });
 
-      const response = await client.invoke<Http_Response>({
+      const response = await client.invoke<Response>({
         uri,
         method: "post",
         args: {
