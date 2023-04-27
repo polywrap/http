@@ -59,7 +59,16 @@ impl Module for HttpPlugin {
         };
 
         let response = if let Some(r) = &args.request {
-            if let Some(form_data) = &r.form_data {
+            if let Some(body) = &r.body {
+                let value = JSON::from_str::<JSON::Value>(body.as_str());
+                if let Ok(json) = value {
+                    request
+                        .send_json(json)
+                        .map_err(|e| PluginError::ModuleError(e.to_string()))?
+                } else {
+                    return Err(PluginError::JSONError(value.unwrap_err()));
+                }
+            } else if let Some(form_data) = &r.form_data {
                 let mut multipart = Multipart::new();
                 for entry in form_data.iter() {
                     if entry._type.is_some() {

@@ -39,13 +39,13 @@ fn get_client() -> PolywrapClient {
 #[derive(Debug, Serialize, Deserialize)]
 struct ExpectedResponse {
     id: u32,
+    value: u32
 }
 
 #[test]
 fn post_method() {
     let body = json!({
-        "id": "some",
-        "value": 123
+        "value": 5
     });
     let response = get_client()
         .invoke::<HttpResponse>(
@@ -65,6 +65,7 @@ fn post_method() {
 
     assert_eq!(response.status, 201);
     assert_ne!(response.body, None);
-    let body: ExpectedResponse = from_str(&response.body.unwrap()).unwrap();
-    assert_eq!(body.id, 201);
+    let expected_response: ExpectedResponse = from_str(&response.body.unwrap()).unwrap();
+    assert_eq!(expected_response.id, 201);
+    assert_eq!(expected_response.value, 5);
 }
