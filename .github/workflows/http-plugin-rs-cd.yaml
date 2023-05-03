@@ -13,7 +13,7 @@ jobs:
     name: http-plugin-rs-cd
     if: |
       github.event.pull_request.merged &&
-      startsWith(github.event.pull_request.title, '/release/rs') == true &&
+      endsWith(github.event.pull_request.title, '/release/rs') &&
       github.event.pull_request.user.login != 'github-actions'
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -45,7 +45,7 @@ jobs:
           override: true
 
       - name: Publish
-        run: cargo release --token {{ env.CRATES_TOKEN }} --allow-dirty
+        run: cargo publish --token {{ env.CRATES_TOKEN }}
         working-directory: ./implementations/rs
         env:
           CRATES_TOKEN: ${{ secrets.POLYWRAP_BUILD_BOT_CRATES_PAT }}
