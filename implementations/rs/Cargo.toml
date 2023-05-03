@@ -12,8 +12,14 @@ include = [
 ]
 
 [dependencies]
-polywrap_client = { version = "0.1.6-beta.1" }
+polywrap_core = { version = "0.1.6-beta.1" }
+polywrap_plugin = { version = "0.1.6-beta.1" }
+polywrap_msgpack = { version = "0.1.6-beta.1" }
+wrap_manifest_schemas = { version = "0.1.6-beta.1" }
 ureq = "2.5.0"
 serde = {version = "1.0.145", features = ["derive"]}
 base64 = "0.13.0"
 multipart = "0.17.0"
+
+[dev-dependencies]
+polywrap_client = { version = "0.1.6-beta.1" }

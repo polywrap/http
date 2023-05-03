@@ -1,9 +1,6 @@
 use crate::wrap::wrap_info::get_manifest;
 use mapping::{parse_request, parse_response};
 use multipart::client::lazy::Multipart;
-use polywrap_client::{
-    core as polywrap_core, msgpack as polywrap_msgpack, plugin as polywrap_plugin,
-};
 use polywrap_core::invoke::Invoker;
 use polywrap_plugin::{error::PluginError, implementor::plugin_impl, JSON};
 use std::{io::Cursor, sync::Arc};
