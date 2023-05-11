@@ -2,7 +2,7 @@
 import base64
 from typing import Optional, cast
 
-from httpx import AsyncClient
+from httpx import Client
 from httpx import Response as HttpxResponse
 from polywrap_core import InvokerClient, UriPackageOrWrapper
 from polywrap_msgpack import GenericMap
@@ -31,7 +31,7 @@ class HttpPlugin(Module[None]):
     def __init__(self):
         """Initialize the HTTP plugin."""
         super().__init__(None)
-        self.client = AsyncClient()
+        self.client = Client()
 
     async def get(
         self, args: ArgsGet, client: InvokerClient[UriPackageOrWrapper], env: None
@@ -39,16 +39,16 @@ class HttpPlugin(Module[None]):
         """Make a GET request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
-            res = await self.client.get(args["url"])
+            res = self.client.get(args["url"])
         elif args["request"] is not None:
-            res = await self.client.get(
+            res = self.client.get(
                 args["url"],
                 params=args["request"].get("urlParams"),
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
             )
         else:
-            res = await self.client.get(args["url"])
+            res = self.client.get(args["url"])
 
         if _is_response_binary(args):
             return Response(
@@ -71,14 +71,14 @@ class HttpPlugin(Module[None]):
         """Make a POST request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
-            res = await self.client.post(args["url"])
+            res = self.client.post(args["url"])
         elif args["request"] is not None:
             content = (
                 args["request"]["body"].encode()
                 if args["request"]["body"] is not None
                 else None
             )
-            res = await self.client.post(
+            res = self.client.post(
                 args["url"],
                 content=content,
                 params=args["request"].get("urlParams"),
@@ -86,7 +86,7 @@ class HttpPlugin(Module[None]):
                 timeout=cast(float, args["request"].get("timeout")),
             )
         else:
-            res = await self.client.post(args["url"])
+            res = self.client.post(args["url"])
 
         if _is_response_binary(args):
             return Response(
