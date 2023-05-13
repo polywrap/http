@@ -3,7 +3,7 @@
 
 // NOTE: This is an auto-generated file.
 //       All modifications will be overwritten.
-use polywrap_core::{invoke::Invoker, uri::Uri};
+use polywrap_core::{invoker::Invoker, uri::Uri};
 use polywrap_msgpack::{decode, serialize};
 use polywrap_plugin::{error::PluginError, BigInt, BigNumber, Map, JSON};
 use serde::{Serialize, Deserialize};
@@ -24,19 +24,19 @@ use std::sync::Arc;
 // Imported objects START //
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct HttpHttpRequest {
+pub struct HttpRequest {
     pub headers: Option<Map<String, String>>,
     #[serde(rename = "urlParams")]
     pub url_params: Option<Map<String, String>>,
     #[serde(rename = "responseType")]
-    pub response_type: HttpHttpResponseType,
+    pub response_type: HttpResponseType,
     pub body: Option<String>,
     #[serde(rename = "formData")]
-    pub form_data: Option<Vec<HttpHttpFormDataEntry>>,
+    pub form_data: Option<Vec<HttpFormDataEntry>>,
     pub timeout: Option<u32>,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct HttpHttpFormDataEntry {
+pub struct HttpFormDataEntry {
     pub name: String,
     pub value: Option<String>,
     #[serde(rename = "fileName")]
@@ -45,7 +45,7 @@ pub struct HttpHttpFormDataEntry {
     pub _type: Option<String>,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct HttpHttpResponse {
+pub struct HttpResponse {
     pub status: i32,
     #[serde(rename = "statusText")]
     pub status_text: String,
@@ -61,7 +61,7 @@ pub struct HttpHttpResponse {
 // Imported enums START //
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize)]
-pub enum HttpHttpResponseType {
+pub enum HttpResponseType {
     TEXT,
     BINARY,
     _MAX_
@@ -74,14 +74,14 @@ pub enum HttpHttpResponseType {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct HttpModuleArgsGet {
     pub url: String,
-    pub request: Option<HttpHttpRequest>,
+    pub request: Option<HttpRequest>,
 }
 
 // URI: "ens/wraps.eth:http@1.1.0" //
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct HttpModuleArgsPost {
     pub url: String,
-    pub request: Option<HttpHttpRequest>,
+    pub request: Option<HttpRequest>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -94,9 +94,9 @@ impl HttpModule {
         HttpModule {}
     }
 
-    pub fn get(args: &HttpModuleArgsGet, invoker: Arc<dyn Invoker>) -> Result<Option<HttpHttpResponse>, PluginError> {
+    pub fn get(args: &HttpModuleArgsGet, invoker: Arc<dyn Invoker>) -> Result<Option<HttpResponse>, PluginError> {
         let uri = HttpModule::URI;
-        let serialized_args = serialize(args.clone()).unwrap();
+        let serialized_args = serialize(&args.clone()).unwrap();
         let opt_args = Some(serialized_args.as_slice());
         let uri = Uri::try_from(uri).unwrap();
         let result = invoker.invoke_raw(
@@ -116,9 +116,9 @@ impl HttpModule {
         Ok(Some(decode(result.as_slice())?))
     }
 
-    pub fn post(args: &HttpModuleArgsPost, invoker: Arc<dyn Invoker>) -> Result<Option<HttpHttpResponse>, PluginError> {
+    pub fn post(args: &HttpModuleArgsPost, invoker: Arc<dyn Invoker>) -> Result<Option<HttpResponse>, PluginError> {
         let uri = HttpModule::URI;
-        let serialized_args = serialize(args.clone()).unwrap();
+        let serialized_args = serialize(&args.clone()).unwrap();
         let opt_args = Some(serialized_args.as_slice());
         let uri = Uri::try_from(uri).unwrap();
         let result = invoker.invoke_raw(

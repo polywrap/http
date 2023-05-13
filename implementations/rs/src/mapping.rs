@@ -2,7 +2,7 @@ use polywrap_msgpack::extensions::generic_map::GenericMap;
 use polywrap_plugin::error::PluginError;
 
 use crate::wrap::types::{
-    HttpHttpRequest as Request, HttpHttpResponse as Response, HttpHttpResponseType as ResponseType,
+    HttpRequest as Request, HttpResponse as Response, HttpResponseType as ResponseType,
 };
 
 use std::collections::BTreeMap;

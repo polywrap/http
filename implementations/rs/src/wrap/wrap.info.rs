@@ -17,8 +17,8 @@ pub fn get_manifest() -> WrapManifest {
       ],
       "kind": 520,
       "namespace": "Http",
-      "nativeType": "Http_ResponseType",
-      "type": "Http_Http_ResponseType",
+      "nativeType": "ResponseType",
+      "type": "Http_ResponseType",
       "uri": "ens/wraps.eth:http@1.1.0"
     }
   ],
@@ -47,9 +47,9 @@ pub fn get_manifest() -> WrapManifest {
               "object": {
                 "kind": 8192,
                 "name": "request",
-                "type": "Http_Http_Request"
+                "type": "Http_Request"
               },
-              "type": "Http_Http_Request"
+              "type": "Http_Request"
             }
           ],
           "kind": 64,
@@ -61,9 +61,9 @@ pub fn get_manifest() -> WrapManifest {
             "object": {
               "kind": 8192,
               "name": "get",
-              "type": "Http_Http_Response"
+              "type": "Http_Response"
             },
-            "type": "Http_Http_Response"
+            "type": "Http_Response"
           },
           "type": "Method"
         },
@@ -87,9 +87,9 @@ pub fn get_manifest() -> WrapManifest {
               "object": {
                 "kind": 8192,
                 "name": "request",
-                "type": "Http_Http_Request"
+                "type": "Http_Request"
               },
-              "type": "Http_Http_Request"
+              "type": "Http_Request"
             }
           ],
           "kind": 64,
@@ -101,9 +101,9 @@ pub fn get_manifest() -> WrapManifest {
             "object": {
               "kind": 8192,
               "name": "post",
-              "type": "Http_Http_Response"
+              "type": "Http_Response"
             },
-            "type": "Http_Http_Response"
+            "type": "Http_Response"
           },
           "type": "Method"
         }
@@ -118,7 +118,7 @@ pub fn get_manifest() -> WrapManifest {
     {
       "kind": 1025,
       "namespace": "Http",
-      "nativeType": "Http_Request",
+      "nativeType": "Request",
       "properties": [
         {
           "kind": 34,
@@ -181,12 +181,12 @@ pub fn get_manifest() -> WrapManifest {
             "kind": 16384,
             "name": "responseType",
             "required": true,
-            "type": "Http_Http_ResponseType"
+            "type": "Http_ResponseType"
           },
           "kind": 34,
           "name": "responseType",
           "required": true,
-          "type": "Http_Http_ResponseType"
+          "type": "Http_ResponseType"
         },
         {
           "comment": "The body of the request. If present, the `formData` property will be ignored.",
@@ -205,7 +205,7 @@ pub fn get_manifest() -> WrapManifest {
               "kind": 8192,
               "name": "formData",
               "required": true,
-              "type": "Http_Http_FormDataEntry"
+              "type": "Http_FormDataEntry"
             },
             "kind": 18,
             "name": "formData",
@@ -213,14 +213,14 @@ pub fn get_manifest() -> WrapManifest {
               "kind": 8192,
               "name": "formData",
               "required": true,
-              "type": "Http_Http_FormDataEntry"
+              "type": "Http_FormDataEntry"
             },
-            "type": "[Http_Http_FormDataEntry]"
+            "type": "[Http_FormDataEntry]"
           },
           "comment": "    An alternative to the standard request body, 'formData' is expected to be in the 'multipart/form-data' format.\nIf present, the `body` property is not null, `formData` will be ignored.\nOtherwise, if formData is not null, the following header will be added to the request: 'Content-Type: multipart/form-data'.",
           "kind": 34,
           "name": "formData",
-          "type": "[Http_Http_FormDataEntry]"
+          "type": "[Http_FormDataEntry]"
         },
         {
           "kind": 34,
@@ -233,13 +233,13 @@ pub fn get_manifest() -> WrapManifest {
           "type": "UInt32"
         }
       ],
-      "type": "Http_Http_Request",
+      "type": "Http_Request",
       "uri": "ens/wraps.eth:http@1.1.0"
     },
     {
       "kind": 1025,
       "namespace": "Http",
-      "nativeType": "Http_FormDataEntry",
+      "nativeType": "FormDataEntry",
       "properties": [
         {
           "comment": "FormData entry key",
@@ -288,13 +288,13 @@ pub fn get_manifest() -> WrapManifest {
           "type": "String"
         }
       ],
-      "type": "Http_Http_FormDataEntry",
+      "type": "Http_FormDataEntry",
       "uri": "ens/wraps.eth:http@1.1.0"
     },
     {
       "kind": 1025,
       "namespace": "Http",
-      "nativeType": "Http_Response",
+      "nativeType": "Response",
       "properties": [
         {
           "kind": 34,
@@ -359,7 +359,7 @@ pub fn get_manifest() -> WrapManifest {
           "type": "String"
         }
       ],
-      "type": "Http_Http_Response",
+      "type": "Http_Response",
       "uri": "ens/wraps.eth:http@1.1.0"
     }
   ],
@@ -369,16 +369,16 @@ pub fn get_manifest() -> WrapManifest {
         "type": "Http_Module"
       },
       {
-        "type": "Http_Http_Request"
+        "type": "Http_Request"
       },
       {
-        "type": "Http_Http_ResponseType"
+        "type": "Http_ResponseType"
       },
       {
-        "type": "Http_Http_FormDataEntry"
+        "type": "Http_FormDataEntry"
       },
       {
-        "type": "Http_Http_Response"
+        "type": "Http_Response"
       }
     ],
     "interfaces": [
@@ -409,9 +409,9 @@ pub fn get_manifest() -> WrapManifest {
             "object": {
               "kind": 8192,
               "name": "request",
-              "type": "Http_Http_Request"
+              "type": "Http_Request"
             },
-            "type": "Http_Http_Request"
+            "type": "Http_Request"
           }
         ],
         "kind": 64,
@@ -423,9 +423,9 @@ pub fn get_manifest() -> WrapManifest {
           "object": {
             "kind": 8192,
             "name": "get",
-            "type": "Http_Http_Response"
+            "type": "Http_Response"
           },
-          "type": "Http_Http_Response"
+          "type": "Http_Response"
         },
         "type": "Method"
       },
@@ -449,9 +449,9 @@ pub fn get_manifest() -> WrapManifest {
             "object": {
               "kind": 8192,
               "name": "request",
-              "type": "Http_Http_Request"
+              "type": "Http_Request"
             },
-            "type": "Http_Http_Request"
+            "type": "Http_Request"
           }
         ],
         "kind": 64,
@@ -463,9 +463,9 @@ pub fn get_manifest() -> WrapManifest {
           "object": {
             "kind": 8192,
             "name": "post",
-            "type": "Http_Http_Response"
+            "type": "Http_Response"
           },
-          "type": "Http_Http_Response"
+          "type": "Http_Response"
         },
         "type": "Method"
       }

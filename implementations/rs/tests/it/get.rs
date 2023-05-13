@@ -1,40 +1,11 @@
-use http_plugin_rs::wrap::types::HttpHttpResponse as HttpResponse;
-use http_plugin_rs::HttpPlugin;
-use polywrap_core::{
-    client::ClientConfig,
-    resolvers::{
-        static_resolver::{StaticResolver, StaticResolverLike},
-        uri_resolution_context::UriPackage,
-    },
-    uri::Uri,
-};
+use http_plugin_rs::wrap::types::HttpResponse;
+use polywrap_core::uri::Uri;
 use polywrap_msgpack::{msgpack, serialize};
-use polywrap_plugin::{package::PluginPackage, Map, JSON};
-use polywrap_client::{
-    client::PolywrapClient,
-};
+use polywrap_plugin::{Map, JSON};
 use serde::{Deserialize, Serialize};
-use std::{
-    collections::BTreeMap,
-    sync::{Arc, Mutex},
-};
+use std::collections::BTreeMap;
 
-fn get_client() -> PolywrapClient {
-    let http_plugin = HttpPlugin {};
-    let plugin_pkg: PluginPackage = http_plugin.into();
-    let package = Arc::new(Mutex::new(plugin_pkg));
-
-    let resolver = StaticResolver::from(vec![StaticResolverLike::Package(UriPackage {
-        uri: Uri::try_from("plugin/http").unwrap(),
-        package,
-    })]);
-
-    PolywrapClient::new(ClientConfig {
-        resolver: Arc::new(resolver),
-        interfaces: None,
-        envs: None,
-    })
-}
+use crate::get_client;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct ExpectedResponse {
@@ -90,7 +61,7 @@ fn params_get() {
         .invoke::<HttpResponse>(
             &Uri::try_from("plugin/http").unwrap(),
             "get",
-            Some(&serialize(args).unwrap()),
+            Some(&serialize(&args).unwrap()),
             None,
             None,
         )

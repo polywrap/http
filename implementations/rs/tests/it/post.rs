@@ -1,45 +1,17 @@
-use http_plugin_rs::wrap::types::HttpHttpResponse as HttpResponse;
-use http_plugin_rs::HttpPlugin;
+use http_plugin_rs::wrap::types::HttpResponse;
 use polywrap_client::{
-    client::PolywrapClient,
-    core::{
-        client::ClientConfig,
-        resolvers::{
-            static_resolver::{StaticResolver, StaticResolverLike},
-            uri_resolution_context::UriPackage,
-        },
-        uri::Uri,
-    },
+    core::uri::Uri,
     msgpack::msgpack,
-    plugin::{
-        package::PluginPackage,
-        JSON::{from_str, json},
-    },
+    plugin::JSON::{from_str, json},
 };
 use serde::{Deserialize, Serialize};
-use std::sync::{Arc, Mutex};
 
-fn get_client() -> PolywrapClient {
-    let http_plugin = HttpPlugin {};
-    let plugin_pkg: PluginPackage = http_plugin.into();
-    let package = Arc::new(Mutex::new(plugin_pkg));
-
-    let resolver = StaticResolver::from(vec![StaticResolverLike::Package(UriPackage {
-        uri: Uri::try_from("plugin/http").unwrap(),
-        package,
-    })]);
-
-    PolywrapClient::new(ClientConfig {
-        resolver: Arc::new(resolver),
-        interfaces: None,
-        envs: None,
-    })
-}
+use crate::get_client;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct ExpectedResponse {
     id: u32,
-    value: u32
+    value: u32,
 }
 
 #[test]

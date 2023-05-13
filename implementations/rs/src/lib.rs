@@ -1,12 +1,12 @@
 use crate::wrap::wrap_info::get_manifest;
 use mapping::{parse_request, parse_response};
 use multipart::client::lazy::Multipart;
-use polywrap_core::invoke::Invoker;
+use polywrap_core::invoker::Invoker;
 use polywrap_plugin::{error::PluginError, implementor::plugin_impl, JSON};
 use std::{io::Cursor, sync::Arc};
 use wrap::{
     module::{ArgsGet, ArgsPost, Module},
-    types::{HttpHttpResponse as HttpResponse, HttpHttpResponseType as ResponseType},
+    types::{HttpResponse, HttpResponseType as ResponseType},
 };
 pub mod mapping;
 pub mod wrap;
