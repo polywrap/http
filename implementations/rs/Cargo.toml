@@ -1,6 +1,6 @@
 [package]
 name = "http_plugin_rs"
-version = "0.0.1-beta.3"
+version = "0.0.1-beta.4"
 license = "MIT"
 description = "Polywrap rust HTTP plugin"
 edition = "2021"
