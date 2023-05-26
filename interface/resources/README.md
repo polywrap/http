@@ -1,43 +1,109 @@
-# HTTP Wrapper Interface
+# Datetime Wrapper Interface
 
-| Version | URI | WRAP Version |
-|-|-|-|
-| 1.0.0 | [`wrap://ens/wraps.eth:http@1.0.0`](https://wrappers.io/v/ens/wraps.eth:http@1.0.0) | 0.1 |
-| 1.1.0 | [`wrap://ens/wraps.eth:http@1.1.0`](https://wrappers.io/v/ens/wraps.eth:http@1.1.0) | 0.1 |
+| Version | URI                                                                                 | WRAP Version |
+|---------|-------------------------------------------------------------------------------------|-|
+| 2.0.0   | [`wrap://ens/wraps.eth:http@2.0.0`](https://wrappers.io/v/ens/wraps.eth:http@2.0.0) | 0.1 |
 
 ## Interface
 ```graphql
 type Response {
     status: Int!
     statusText: String!
-    headers: Map @annotate(type: "Map<String!, String!>")
+    headers: [HTTPHeader!]
     body: String
+    httpVersion: HTTPVersion!
+    cookies: [Cookie!]
 }
 
 type Request {
-    headers: Map @annotate(type: "Map<String!, String!>")
+    headers: [HTTPHeader!]
     urlParams: Map @annotate(type: "Map<String!, String!>")
     responseType: ResponseType!
-    """The body of the request. If present, the `formData` property will be ignored."""
     body: String
-    """
-    An alternative to the standard request body, 'formData' is expected to be in the 'multipart/form-data' format.
-    If present, the `body` property is not null, `formData` will be ignored.
-    Otherwise, if formData is not null, the following header will be added to the request: 'Content-Type: multipart/form-data'.
-    """
     formData: [FormDataEntry!]
-    timeout: UInt32
+    timeout: Int
+    auth: Auth
+    mode: CORSMode
+    withCredentials: Boolean
+    httpVersion: HTTPVersion
+    maxRedirects: Int
+    proxy: Proxy
+    cookies: [Cookie!]
+    cache: CachePolicy
+}
+
+type HTTPHeader {
+    key: String!
+    value: String!
 }
 
 type FormDataEntry {
-    """FormData entry key"""
     name: String!
-    """If 'type' is defined, value is treated as a base64 byte string"""
     value: String
-    """File name to report to the server"""
     fileName: String
-    """MIME type (https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types). Defaults to empty string."""
     type: String
+}
+
+type Auth {
+    basicAuth: BasicAuth
+    digestAuth: DigestAuth
+    bearerToken: BearerToken
+    oauth: OAuth
+}
+
+type BasicAuth {
+    username: String!
+    password: String!
+}
+
+type DigestAuth {
+    username: String!
+    password: String!
+    realm: String
+    nonce: String
+    uri: String
+    response: String
+    opaque: String
+}
+
+type BearerToken {
+    token: String!
+}
+
+type OAuth {
+    consumerKey: String!
+    consumerSecret: String!
+    accessToken: String!
+    tokenSecret: String!
+}
+
+type Proxy {
+    host: String!
+    port: Int!
+    auth: BasicAuth
+}
+
+type Cookie {
+    name: String!
+    value: String!
+    domain: String
+    path: String
+    expires: Int
+    secure: Boolean
+    httpOnly: Boolean
+    sameSite: CookieSameSitePolicy
+}
+
+enum CookieSameSitePolicy {
+    STRICT
+    LAX
+    NONE
+}
+
+enum CORSMode {
+    CORS
+    NO_CORS
+    SAME_ORIGIN
 }
 
 enum ResponseType {
@@ -45,21 +111,51 @@ enum ResponseType {
     BINARY
 }
 
+enum HTTPMethod {
+    GET
+    POST
+    PUT
+    DELETE
+    HEAD
+    PATCH
+    OPTIONS
+}
+
+enum HTTPVersion {
+    HTTP1_1
+    HTTP2
+    HTTP3
+}
+
+enum CachePolicy {
+    NO_CACHE
+    RELOAD
+    NO_STORE
+    FORCE_CACHE
+    ONLY_IF_CACHED
+}
+
 type Module {
+    request(url: String!, method: HTTPMethod!, request: Request): Response
     get(url: String!, request: Request): Response
     post(url: String!, request: Request): Response
+    put(url: String!, request: Request): Response
+    delete(url: String!, request: Request): Response
+    head(url: String!, request: Request): Response
+    patch(url: String!, request: Request): Response
+    options(url: String!, request: Request): Response
 }
 ```
 
 ## Usage
 ```graphql
-#import * from "ens/wraps.eth:http@1.1.0"
+#import * from "ens/wraps.eth:http@2.0.0"
 ```
 
-And implement the `get` + `post` methods within your programming language of choice.
+And implement the interface methods within your programming language of choice.
 
 ## Source Code
-[Link](https://github.com/polywrap/http)
+[Link](https://github.com/polywrap/std/http)
 
 ## Known Implementations
 [Link](https://github.com/polywrap/http/tree/master/implementations)
