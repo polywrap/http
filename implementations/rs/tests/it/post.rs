@@ -1,9 +1,9 @@
-use http_plugin_rs::wrap::types::HttpResponse;
 use polywrap_client::{
     core::uri::Uri,
     msgpack::msgpack,
     plugin::JSON::{from_str, json},
 };
+use polywrap_http_plugin::wrap::types::Response;
 use serde::{Deserialize, Serialize};
 
 use crate::get_client;
@@ -20,7 +20,7 @@ fn post_method() {
         "value": 5
     });
     let response = get_client()
-        .invoke::<HttpResponse>(
+        .invoke::<Response>(
             &Uri::try_from("plugin/http").unwrap(),
             "post",
             Some(&msgpack!({

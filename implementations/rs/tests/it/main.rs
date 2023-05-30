@@ -1,10 +1,10 @@
-use http_plugin_rs::HttpPlugin;
+use polywrap_http_plugin::HttpPlugin;
 use polywrap_client::client::PolywrapClient;
 use polywrap_core::{
     client::ClientConfig,
-    resolvers::static_resolver::{StaticResolver, StaticResolverLike},
     uri::Uri,
 };
+use polywrap_resolvers::static_resolver::{StaticResolver, StaticResolverLike};
 use polywrap_plugin::{package::PluginPackage};
 use std::{sync::Arc};
 

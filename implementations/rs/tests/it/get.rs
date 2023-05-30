@@ -1,4 +1,4 @@
-use http_plugin_rs::wrap::types::HttpResponse;
+use polywrap_http_plugin::wrap::types::Response;
 use polywrap_core::uri::Uri;
 use polywrap_msgpack::{msgpack, serialize};
 use polywrap_plugin::{Map, JSON};
@@ -15,7 +15,7 @@ struct ExpectedResponse {
 #[test]
 fn simple_get() {
     let response = get_client()
-        .invoke::<HttpResponse>(
+        .invoke::<Response>(
             &Uri::try_from("plugin/http").unwrap(),
             "get",
             Some(&msgpack!({
@@ -58,7 +58,7 @@ fn params_get() {
         },
     };
     let response = get_client()
-        .invoke::<HttpResponse>(
+        .invoke::<Response>(
             &Uri::try_from("plugin/http").unwrap(),
             "get",
             Some(&serialize(&args).unwrap()),

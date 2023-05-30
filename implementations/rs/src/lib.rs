@@ -6,7 +6,7 @@ use polywrap_plugin::{error::PluginError, implementor::plugin_impl, JSON};
 use std::{io::Cursor, sync::Arc};
 use wrap::{
     module::{ArgsGet, ArgsPost, Module},
-    types::{HttpResponse, HttpResponseType as ResponseType},
+    types::{Response, ResponseType},
 };
 pub mod mapping;
 pub mod wrap;
@@ -20,11 +20,13 @@ impl Module for HttpPlugin {
         &mut self,
         args: &ArgsGet,
         _: Arc<dyn Invoker>,
-    ) -> Result<Option<HttpResponse>, PluginError> {
+    ) -> Result<Option<Response>, PluginError> {
         let response = parse_request(&args.url, args.request.clone(), mapping::RequestMethod::GET)
             .unwrap()
             .call()
-            .map_err(|e| PluginError::ModuleError(e.to_string()))?;
+            .map_err(|e| PluginError::InvocationError {
+                exception: e.to_string(),
+            })?;
 
         let response_type = if let Some(r) = &args.request {
             r.response_type
@@ -41,7 +43,7 @@ impl Module for HttpPlugin {
         &mut self,
         args: &ArgsPost,
         _: Arc<dyn Invoker>,
-    ) -> Result<Option<HttpResponse>, PluginError> {
+    ) -> Result<Option<Response>, PluginError> {
         let request = parse_request(
             &args.url,
             args.request.clone(),
@@ -61,7 +63,9 @@ impl Module for HttpPlugin {
                 if let Ok(json) = value {
                     request
                         .send_json(json)
-                        .map_err(|e| PluginError::ModuleError(e.to_string()))?
+                        .map_err(|e| PluginError::InvocationError {
+                            exception: e.to_string(),
+                        })?
                 } else {
                     return Err(PluginError::JSONError(value.unwrap_err()));
                 }
@@ -95,14 +99,14 @@ impl Module for HttpPlugin {
                     .send(mdata)
                     .unwrap()
             } else {
-                request
-                    .call()
-                    .map_err(|e| PluginError::ModuleError(e.to_string()))?
+                request.call().map_err(|e| PluginError::InvocationError {
+                    exception: e.to_string(),
+                })?
             }
         } else {
-            request
-                .call()
-                .map_err(|e| PluginError::ModuleError(e.to_string()))?
+            request.call().map_err(|e| PluginError::InvocationError {
+                exception: e.to_string(),
+            })?
         };
         let parsed_response = parse_response(response, response_type)?;
 
