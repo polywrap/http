@@ -13,24 +13,14 @@ type Response {
     statusText: String!
 
     """
-    headers: List of HTTP headers in the response.
+    headers: HTTP headers in the response.
     """
-    headers: [HTTPHeader!]
+    headers: Map @annotate(type: "Map<String!, String!>")
 
     """
     body: The body of the response, if any.
     """
     body: String
-
-    """
-    httpVersion: The HTTP version used in the response.
-    """
-    httpVersion: HTTPVersion!
-
-    """
-    cookies: List of cookies sent in the response.
-    """
-    cookies: [Cookie!]
 }
 
 """
@@ -38,9 +28,9 @@ Request: Represents an HTTP request to be sent to a server.
 """
 type Request {
     """
-    headers: List of HTTP headers to be included in the request.
+    headers: HTTP headers to be included in the request.
     """
-    headers: [HTTPHeader!]
+    headers: Map @annotate(type: "Map<String!, String!>")
 
     """
     urlParams: Query parameters to be appended to the request URL.
@@ -53,330 +43,14 @@ type Request {
     responseType: ResponseType!
 
     """
-    body: The body of the request, if any. If body is present, formData is ignored.
+    body: The body of the request, if any.
     """
     body: String
-
-    """
-    formData: List of form data entries to be included in the request, if body is not present.
-    """
-    formData: [FormDataEntry!]
 
     """
     timeout: Timeout for the request in milliseconds. If not set, the request will not timeout.
     """
     timeout: Int
-
-    """
-    auth: Authentication details for the request.
-    """
-    auth: Auth
-
-    """
-    mode: The CORS mode of the request.
-    """
-    mode: CORSMode
-
-    """
-    withCredentials: Indicates whether or not cross-site Access-Control requests should be made using credentials.
-    """
-    withCredentials: Boolean
-
-    """
-    httpVersion: The HTTP version to use for the request.
-    """
-    httpVersion: HTTPVersion
-
-    """
-    maxRedirects: The maximum number of redirects to follow for this request. If not set, defaults to system-configured value.
-    """
-    maxRedirects: Int
-
-    """
-    proxy: The proxy settings to use for this request.
-    """
-    proxy: Proxy
-
-    """
-    cookies: List of cookies to be included in the request.
-    """
-    cookies: [Cookie!]
-
-    """
-    cache: The caching policy for this request.
-    """
-    cache: CachePolicy
-}
-
-"""
-HTTPHeader: Represents a single HTTP header.
-"""
-type HTTPHeader {
-    """
-    key: The name of the header.
-    """
-    key: String!
-
-    """
-    value: The value of the header.
-    """
-    value: String!
-}
-
-"""
-FormDataEntry: Represents a single form data entry.
-"""
-type FormDataEntry {
-    """
-    name: The name of the form data entry.
-    """
-    name: String!
-
-    """
-    value: The value of the form data entry, if any.
-    """
-    value: String
-
-    """
-    fileName: The file name if the form data entry is a file.
-    """
-    fileName: String
-
-    """
-    type: The content type of the form data entry.
-    """
-    type: String
-}
-
-"""
-Auth: Represents the authentication details for an HTTP request.
-At most one of the authentication methods can be used for a request.
-"""
-type Auth {
-    """
-    basicAuth: Specifies the credentials for Basic Authentication.
-    """
-    basicAuth: BasicAuth
-
-    """
-    digestAuth: Specifies the credentials for Digest Authentication.
-    """
-    digestAuth: DigestAuth
-
-    """
-    bearerToken: Specifies the Bearer token for Bearer Token Authentication.
-    """
-    bearerToken: BearerToken
-
-    """
-    oauth: Specifies the credentials for OAuth Authentication.
-    """
-    oauth: OAuth
-}
-
-"""
-BasicAuth: Represents the credentials for Basic Authentication, which
-transmits credentials as user ID/password pairs, encoded using base64.
-"""
-type BasicAuth {
-    """
-    username: The username for Basic Authentication.
-    """
-    username: String!
-
-    """
-    password: The password for Basic Authentication.
-    """
-    password: String!
-}
-
-"""
-DigestAuth: Represents the credentials for Digest Authentication, which
-is a method of HTTP authentication that applies a cryptographic function
-to a password before sending it over the network.
-"""
-type DigestAuth {
-    """
-    username: The username for Digest Authentication.
-    """
-    username: String!
-
-    """
-    password: The password for Digest Authentication.
-    """
-    password: String!
-
-    """
-    realm: A string that the server may provide to identify the protection space.
-    """
-    realm: String
-
-    """
-    nonce: A server-specified data string which should be uniquely generated each time.
-    """
-    nonce: String
-
-    """
-    uri: The URI from Request-URI of the Request-Line; duplicated here because proxies are allowed to change the Request-Line in transit.
-    """
-    uri: String
-
-    """
-    response: A string of 32 hex digits computed as defined in RFC 2617, which proves that the user knows a password.
-    """
-    response: String
-
-    """
-    opaque: A string of data, specified by the server, which should be returned by the client unchanged.
-    """
-    opaque: String
-}
-
-"""
-BearerToken: Represents the Bearer token for Bearer Token Authentication,
-which is an HTTP authentication scheme that involves security tokens called bearer tokens.
-"""
-type BearerToken {
-    """
-    token: The bearer token which will be included in the request.
-    """
-    token: String!
-}
-
-"""
-OAuth: Represents the credentials for OAuth Authentication,
-which is a protocol that allows a user to grant a third-party website or application
-access to their resources, without necessarily revealing their credentials.
-"""
-type OAuth {
-    """
-    consumerKey: The consumer key for OAuth Authentication.
-    """
-    consumerKey: String!
-
-    """
-    consumerSecret: The consumer secret for OAuth Authentication.
-    """
-    consumerSecret: String!
-
-    """
-    accessToken: The access token for OAuth Authentication.
-    """
-    accessToken: String!
-
-    """
-    tokenSecret: The token secret for OAuth Authentication.
-    """
-    tokenSecret: String!
-}
-
-"""
-Proxy: Represents a proxy configuration.
-"""
-type Proxy {
-    """
-    host: The hostname or IP address of the proxy server.
-    """
-    host: String!
-
-    """
-    port: The port number of the proxy server.
-    """
-    port: Int!
-
-    """
-    auth: The basic authentication credentials for the proxy server, if required.
-    """
-    auth: BasicAuth
-}
-
-"""
-Cookie: Represents an HTTP cookie, a small piece of data stored on the user's computer by the web browser while browsing a website.
-"""
-type Cookie {
-    """
-    name: The name of the cookie. This field is mandatory for a cookie.
-    """
-    name: String!
-
-    """
-    value: The value of the cookie. This field is mandatory for a cookie.
-    """
-    value: String!
-
-    """
-    domain: Specifies the domain for which the cookie is valid. An explicitly specified domain must always start with a dot.
-    """
-    domain: String
-
-    """
-    path: Specifies a path that must exist in the requested URL for the browser to send the Cookie header.
-    """
-    path: String
-
-    """
-    expires: The Unix timestamp (seconds since January 1st, 1970 at UTC) at which the cookie expires. If not set, the cookie will expire at the end of the session (when the browser closes).
-    """
-    expires: Int
-
-    """
-    secure: If true, the cookie will only be sent over an encrypted connection (HTTPS).
-    """
-    secure: Boolean
-
-    """
-    httpOnly: If true, the cookie is inaccessible to the JavaScript Document.cookie API; it is sent only to the server. For defense against cross-site scripting (XSS) attacks.
-    """
-    httpOnly: Boolean
-
-    """
-    sameSite: The SameSite attribute of the cookie. This attribute allows you to declare if your cookie should be restricted to a first-party or same-site context.
-    """
-    sameSite: CookieSameSitePolicy
-}
-
-"""
-CookieSameSitePolicy: Represents the SameSite policy of a cookie.
-This attribute is used to assert that a cookie ought not to be sent along with cross-site requests.
-"""
-enum CookieSameSitePolicy {
-    """
-    STRICT: The browser sends the cookie only for same-site requests (that is, requests originating from the same site that set the cookie).
-    If the request originated from a different URL than the URL of the current location, no cookies with the SameSite=Strict attribute are sent.
-    """
-    STRICT
-
-    """
-    LAX: The browser sends the cookie for same-site requests, and for cross-site top-level navigation GET requests.
-    This is the default value in modern browsers when the SameSite attribute is not specified.
-    """
-    LAX
-
-    """
-    NONE: The browser sends the cookie both for same-site and cross-site requests.
-    Note that the Secure attribute must be set when SameSite is set to None.
-    """
-    NONE
-}
-
-"""
-CORSMode: Specifies how the CORS (Cross-Origin Resource Sharing) request is handled.
-"""
-enum CORSMode {
-    """
-    CORS: Cross-origin request with explicit access control request headers.
-    """
-    CORS
-
-    """
-    NO_CORS: Request without any CORS headers; limited to certain resource types.
-    """
-    NO_CORS
-
-    """
-    SAME_ORIGIN: Request that only works within the same origin; CORS headers are ignored.
-    """
-    SAME_ORIGIN
 }
 
 """
@@ -434,94 +108,9 @@ enum HTTPMethod {
     OPTIONS
 }
 
-"""
-HTTPVersion: Specifies the version of HTTP to be used when making the request.
-"""
-enum HTTPVersion {
-    """
-    HTTP1_1: Use HTTP version 1.1.
-    """
-    HTTP1_1
-
-    """
-    HTTP2: Use HTTP version 2.
-    """
-    HTTP2
-
-    """
-    HTTP3: Use HTTP version 3.
-    """
-    HTTP3
-}
-
-"""
-CachePolicy: Specifies the caching policy to be used for the request.
-"""
-enum CachePolicy {
-    """
-    NO_CACHE: The resource must be fetched from the network and not from the cache.
-    """
-    NO_CACHE
-
-    """
-    RELOAD: The resource must be fetched from the network, bypassing any cache.
-    """
-    RELOAD
-
-    """
-    NO_STORE: The resource, once fetched, must not be stored in any cache.
-    """
-    NO_STORE
-
-    """
-    FORCE_CACHE: The resource is fetched from the cache if available, otherwise from the network.
-    """
-    FORCE_CACHE
-
-    """
-    ONLY_IF_CACHED: The resource is fetched only from the cache.
-    """
-    ONLY_IF_CACHED
-}
-
 type Module {
     """
     Send an HTTP Request to the specified URL using the specified method.
     """
     request(url: String!, method: HTTPMethod!, request: Request): Response
-
-    """
-    Sends a GET request to the specified URL.
-    """
-    get(url: String!, request: Request): Response
-
-    """
-    Sends a POST request to the specified URL.
-    """
-    post(url: String!, request: Request): Response
-
-    """
-    Sends a PUT request to the specified URL.
-    """
-    put(url: String!, request: Request): Response
-
-    """
-    Sends a DELETE request to the specified URL.
-    """
-    delete(url: String!, request: Request): Response
-
-    """
-    Sends a HEAD request to the specified URL.
-    """
-    head(url: String!, request: Request): Response
-
-    """
-    Sends a PATCH request to the specified URL.
-    """
-    patch(url: String!, request: Request): Response
-
-    """
-    Sends a OPTIONS request to the specified URL.
-    """
-    options(url: String!, request: Request): Response
 }
