@@ -14,16 +14,11 @@ type Response {
 }
 
 type Request {
+    url: String!
+    method: HTTPMethod!
     headers: Map @annotate(type: "Map<String!, String!>")
-    urlParams: Map @annotate(type: "Map<String!, String!>")
-    responseType: ResponseType!
     body: String
     timeout: Int
-}
-
-enum ResponseType {
-    TEXT
-    BINARY
 }
 
 enum HTTPMethod {
@@ -34,10 +29,12 @@ enum HTTPMethod {
     HEAD
     PATCH
     OPTIONS
+    CONNECT
+    TRACE
 }
 
 type Module {
-    request(url: String!, method: HTTPMethod!, request: Request): Response
+    request(request: Request): Response
 }
 ```
 

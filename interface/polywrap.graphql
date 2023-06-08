@@ -28,89 +28,84 @@ Request: Represents an HTTP request to be sent to a server.
 """
 type Request {
     """
-    headers: HTTP headers to be included in the request.
+    The request destination
+    """
+    url: String!,
+
+    """
+    The HTTP request method to use
+    """
+    method: HTTPMethod!,
+
+    """
+    HTTP headers to be included in the request.
     """
     headers: Map @annotate(type: "Map<String!, String!>")
 
     """
-    urlParams: Query parameters to be appended to the request URL.
-    """
-    urlParams: Map @annotate(type: "Map<String!, String!>")
-
-    """
-    responseType: Desired format of the response.
-    """
-    responseType: ResponseType!
-
-    """
-    body: The body of the request, if any.
+    The body of the request, if any.
     """
     body: String
 
     """
-    timeout: Timeout for the request in milliseconds. If not set, the request will not timeout.
+    Timeout for the request in milliseconds. If not set, the request will not timeout.
     """
     timeout: Int
 }
 
 """
-ResponseType: Specifies the expected format of the response from the server.
-"""
-enum ResponseType {
-    """
-    TEXT: The response should be returned in text format.
-    """
-    TEXT
-
-    """
-    BINARY: The response should be returned in binary format (i.e. a base64 string).
-    """
-    BINARY
-}
-
-"""
-HTTPMethod: Specifies the HTTP method to be used when making the request.
+Specifies the HTTP method to be used when making the request.
 """
 enum HTTPMethod {
     """
-    GET: The HTTP GET method requests a representation of the specified resource.
+    The HTTP GET method requests a representation of the specified resource.
     """
     GET
 
     """
-    POST: The HTTP POST method sends data to the server to create a new resource.
+    The HTTP POST method sends data to the server to create a new resource.
     """
     POST
 
     """
-    PUT: The HTTP PUT method updates a current resource with new data.
+    The HTTP PUT method updates a current resource with new data.
     """
     PUT
 
     """
-    DELETE: The HTTP DELETE method deletes the specified resource.
+    The HTTP DELETE method deletes the specified resource.
     """
     DELETE
 
     """
-    HEAD: The HTTP HEAD method asks for a response identical to that of a GET request, but without the response body.
+    The HTTP HEAD method asks for a response identical to that of a GET request, but without the response body.
     """
     HEAD
 
     """
-    PATCH: The HTTP PATCH method is used to apply partial modifications to a resource.
+    The HTTP PATCH method is used to apply partial modifications to a resource.
     """
     PATCH
 
     """
-    OPTIONS: The HTTP OPTIONS method describes the communication options for the target resource.
+    The HTTP OPTIONS method describes the communication options for the target resource.
     """
     OPTIONS
+
+    """
+    The HTTP CONNECT method is used by the client to establish a network connection to a web resource via HTTP, usually to facilitate HTTPS-secured communication (SSL Tunneling).
+    """
+    CONNECT
+
+    """
+    The HTTP TRACE method performs a message loop-back test along the path to the target resource, providing a useful diagnostic tool for seeing what's being received at the other end.
+    """
+    TRACE
 }
 
 type Module {
     """
     Send an HTTP Request to the specified URL using the specified method.
     """
-    request(url: String!, method: HTTPMethod!, request: Request): Response
+    request(request: Request): Response
 }
