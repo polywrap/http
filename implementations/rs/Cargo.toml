@@ -1,16 +1,16 @@
 [package]
 name = "polywrap_http_plugin"
-version = "0.0.1-beta.3"
+version = "0.0.1-beta.4"
 license = "MIT"
 description = "Polywrap rust HTTP plugin"
 edition = "2021"
 
 [dependencies]
-polywrap_core = { version = "0.1.6-beta.5" }
-polywrap_plugin = { version = "0.1.6-beta.5" }
-polywrap_msgpack = { version = "0.1.6-beta.5" }
-polywrap_resolvers = { version = "0.1.6-beta.5" }
-wrap_manifest_schemas = { version = "0.1.6-beta.5" }
+polywrap_core = { version = "0.1.6-beta" }
+polywrap_plugin = { version = "0.1.6-beta" }
+polywrap_msgpack = { version = "0.1.6-beta" }
+polywrap_resolvers = { version = "0.1.6-beta" }
+wrap_manifest_schemas = { version = "0.1.6-beta" }
 
 ureq = "2.5.0"
 serde = {version = "1.0.145", features = ["derive"]}
@@ -18,4 +18,4 @@ base64 = "0.13.0"
 multipart = "0.17.0"
 
 [dev-dependencies]
-polywrap_client = { version = "0.1.6-beta.5" }
+polywrap_client = { version = "0.1.6-beta" }
