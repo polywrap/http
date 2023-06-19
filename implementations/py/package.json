@@ -1,10 +1,10 @@
 {
   "name": "@polywrap/python-http-plugin",
   "description": "Polywrap Python Http Plugin",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "private": true,
   "devDependencies": {
-    "polywrap": "0.10.2"
+    "polywrap": "0.10.3"
   },
   "scripts": {
     "codegen": "npx polywrap codegen"

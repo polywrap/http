@@ -1,14 +1,16 @@
 """This package contains the HTTP plugin."""
 import base64
-from typing import Optional, cast
+from io import BytesIO, StringIO
+from typing import Dict, List, Optional, cast
 
 from httpx import Client
+from httpx._types import RequestFiles
 from httpx import Response as HttpxResponse
 from polywrap_core import InvokerClient, UriPackageOrWrapper
 from polywrap_msgpack import GenericMap
 from polywrap_plugin import PluginPackage
 
-from .wrap import ArgsGet, ArgsPost, Module, Response, ResponseType, manifest
+from .wrap import ArgsGet, ArgsPost, Module, Response, ResponseType, manifest, FormDataEntry
 
 
 def _is_response_binary(args: ArgsGet) -> bool:
@@ -78,9 +80,13 @@ class HttpPlugin(Module[None]):
                 if args["request"]["body"] is not None
                 else None
             )
+
+            files = self._get_files_from_form_data(args["request"].get("formData") or [])
+
             res = self.client.post(
                 args["url"],
                 content=content,
+                files=files,
                 params=args["request"].get("urlParams"),
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
@@ -102,6 +108,19 @@ class HttpPlugin(Module[None]):
             headers=GenericMap(dict(res.headers)),
             body=res.text,
         )
+    
+    def _get_files_from_form_data(self, form_data: List[FormDataEntry]) -> RequestFiles:
+        files: RequestFiles = {}
+        for entry in form_data:
+            file_content = cast(str, entry["value"]) if entry.get("value") else ""
+            if entry.get("type"):
+                file_content = (
+                    base64.b64decode(cast(str, entry["value"]).encode())
+                    if entry.get("value")
+                    else bytes()
+                )
+            files[entry["name"]] = file_content
+        return files
 
 
 def http_plugin():
