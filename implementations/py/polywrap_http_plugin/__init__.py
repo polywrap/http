@@ -88,7 +88,9 @@ class HttpPlugin(Module[None]):
                 else None
             )
 
-            files = self._get_files_from_form_data(args["request"].get("formData") or [])
+            files = self._get_files_from_form_data(
+                args["request"].get("formData") or []
+            )
 
             if args["request"].get("headers"):
                 headers = cast(GenericMap[str, str], args["request"]["headers"])
@@ -123,7 +125,7 @@ class HttpPlugin(Module[None]):
             headers=GenericMap(dict(res.headers)),
             body=res.text,
         )
-    
+
     def _get_files_from_form_data(self, form_data: List[FormDataEntry]) -> RequestFiles:
         files: RequestFiles = {}
         for entry in form_data:

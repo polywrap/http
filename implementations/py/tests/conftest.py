@@ -9,10 +9,10 @@ from polywrap_client_config_builder import PolywrapClientConfigBuilder
 
 @fixture
 def builder():
-    return PolywrapClientConfigBuilder().add_resolver(
-        FsUriResolver(file_reader=SimpleFileReader())
-    ).set_package(
-        Uri.from_str("plugin/http"), http_plugin()
+    return (
+        PolywrapClientConfigBuilder()
+        .add_resolver(FsUriResolver(file_reader=SimpleFileReader()))
+        .set_package(Uri.from_str("plugin/http"), http_plugin())
     )
 
 

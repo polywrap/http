@@ -7,21 +7,21 @@ from polywrap_core import Uri
 
 def test_simple_post(client: PolywrapClient):
     response: Response = client.invoke(
-            uri=Uri.from_str("plugin/http"),
-            method="post",
-            args={
-                "url": "https://jsonplaceholder.typicode.com/todos",
-                "request": {
-                    "body": json.dumps(
-                        {
-                            "title": "foo",
-                            "body": "bar",
-                            "userId": 1,
-                        }
-                    ),
-                },
+        uri=Uri.from_str("plugin/http"),
+        method="post",
+        args={
+            "url": "https://jsonplaceholder.typicode.com/todos",
+            "request": {
+                "body": json.dumps(
+                    {
+                        "title": "foo",
+                        "body": "bar",
+                        "userId": 1,
+                    }
+                ),
             },
-        )
+        },
+    )
 
     assert response["status"] == 201
     assert response["body"] is not None
@@ -30,22 +30,22 @@ def test_simple_post(client: PolywrapClient):
 
 def test_binary_post(client: PolywrapClient):
     response: Response = client.invoke(
-            uri=Uri.from_str("plugin/http"),
-            method="post",
-            args={
-                "url": "https://jsonplaceholder.typicode.com/todos",
-                "request": {
-                    "responseType": 1,
-                    "body": json.dumps(
-                        {
-                            "title": "foo",
-                            "body": "bar",
-                            "userId": 1,
-                        }
-                    ),
-                },
+        uri=Uri.from_str("plugin/http"),
+        method="post",
+        args={
+            "url": "https://jsonplaceholder.typicode.com/todos",
+            "request": {
+                "responseType": 1,
+                "body": json.dumps(
+                    {
+                        "title": "foo",
+                        "body": "bar",
+                        "userId": 1,
+                    }
+                ),
             },
-        )
+        },
+    )
 
     assert response["status"] == 201
     assert response["body"] is not None
