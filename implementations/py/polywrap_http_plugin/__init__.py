@@ -90,6 +90,13 @@ class HttpPlugin(Module[None]):
 
             files = self._get_files_from_form_data(args["request"].get("formData") or [])
 
+            if args["request"].get("headers"):
+                headers = cast(GenericMap[str, str], args["request"]["headers"])
+                if headers["Content-Type"] == "multipart/form-data":
+                    # Let httpx handle the content type if it's multipart/form-data
+                    # because it will automatically generate the boundary.
+                    del headers["Content-Type"]
+
             res = self.client.post(
                 args["url"],
                 content=content,
@@ -98,9 +105,6 @@ class HttpPlugin(Module[None]):
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
             )
-
-            with open("hello.txt", "w+") as f:
-                f.write(res.content.decode())
 
         else:
             res = self.client.post(args["url"])
@@ -124,8 +128,6 @@ class HttpPlugin(Module[None]):
         files: RequestFiles = {}
         for entry in form_data:
             file_content = cast(str, entry["value"]) if entry.get("value") else ""
-            with open("hello.txt", "w") as f:
-                f.write("Type" + entry.get("type", "none"))
             if entry.get("type"):
                 file_content = (
                     base64.b64decode(cast(str, entry["value"]).encode())
