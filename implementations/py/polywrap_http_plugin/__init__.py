@@ -1,16 +1,23 @@
 """This package contains the HTTP plugin."""
 import base64
-from io import BytesIO, StringIO
-from typing import Dict, List, Optional, cast
+from typing import List, Optional, cast
 
 from httpx import Client
-from httpx._types import RequestFiles
 from httpx import Response as HttpxResponse
-from polywrap_core import InvokerClient, UriPackageOrWrapper
+from httpx._types import RequestFiles
+from polywrap_core import InvokerClient
 from polywrap_msgpack import GenericMap
 from polywrap_plugin import PluginPackage
 
-from .wrap import ArgsGet, ArgsPost, Module, Response, ResponseType, manifest, FormDataEntry
+from .wrap import (
+    ArgsGet,
+    ArgsPost,
+    FormDataEntry,
+    Module,
+    Response,
+    ResponseType,
+    manifest,
+)
 
 
 def _is_response_binary(args: ArgsGet) -> bool:
@@ -35,8 +42,8 @@ class HttpPlugin(Module[None]):
         super().__init__(None)
         self.client = Client()
 
-    async def get(
-        self, args: ArgsGet, client: InvokerClient[UriPackageOrWrapper], env: None
+    def get(
+        self, args: ArgsGet, client: InvokerClient, env: None
     ) -> Optional[Response]:
         """Make a GET request to the given URL."""
         res: HttpxResponse
@@ -67,8 +74,8 @@ class HttpPlugin(Module[None]):
             body=res.text,
         )
 
-    async def post(
-        self, args: ArgsPost, client: InvokerClient[UriPackageOrWrapper], env: None
+    def post(
+        self, args: ArgsPost, client: InvokerClient, env: None
     ) -> Optional[Response]:
         """Make a POST request to the given URL."""
         res: HttpxResponse
@@ -91,6 +98,10 @@ class HttpPlugin(Module[None]):
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
             )
+
+            with open("hello.txt", "w+") as f:
+                f.write(res.content.decode())
+
         else:
             res = self.client.post(args["url"])
 
@@ -113,6 +124,8 @@ class HttpPlugin(Module[None]):
         files: RequestFiles = {}
         for entry in form_data:
             file_content = cast(str, entry["value"]) if entry.get("value") else ""
+            with open("hello.txt", "w") as f:
+                f.write("Type" + entry.get("type", "none"))
             if entry.get("type"):
                 file_content = (
                     base64.b64decode(cast(str, entry["value"]).encode())
