@@ -13,19 +13,17 @@ Http plugin currently supports two different methods `GET` and `POST`. Similar t
 Below is sample invocation of the `GET` request with custom request headers and query parameters (`urlParams`).
 
 ```python
-result = await client.invoke(
-    InvokerOptions(
-        uri="wrap://ens/http.polywrap.eth",
-        method="get",
-        args={
-            "url": "http://www.example.com/api",
-            "request": {
-                "responseType": "TEXT",
-                "urlParams": [{"key": "query", "value": "foo"}],
-                "headers": [{"key": "X-Request-Header", "value": "req-foo"}],
-            },
+result = client.invoke(
+    uri="wrap://ens/http.polywrap.eth",
+    method="get",
+    args={
+        "url": "http://www.example.com/api",
+        "request": {
+            "responseType": "TEXT",
+            "urlParams": [{"key": "query", "value": "foo"}],
+            "headers": [{"key": "X-Request-Header", "value": "req-foo"}],
         },
-    )
+    },
 )
 ```
 
@@ -34,19 +32,17 @@ result = await client.invoke(
 Below is sample invocation of the `POST` request with custom request headers and query parameters (`urlParams`). It is also possible to set request body as shown below.
 
 ```python
-response = await client.invoke(
-    InvokerOptions(
-        uri="wrap://ens/http.polywrap.eth",
-        method="post",
-        args={
-            "url": "http://www.example.com/api",
-            "request": {
-                "responseType": "TEXT",
-                "urlParams": [{"key": "query", "value": "foo"}],
-                "headers": [{"key": "X-Request-Header", "value": "req-foo"}],
-                "body": "{data: 'test-request'}",
-            }
+response = client.invoke(
+    uri="wrap://ens/http.polywrap.eth",
+    method="post",
+    args={
+        "url": "http://www.example.com/api",
+        "request": {
+            "responseType": "TEXT",
+            "urlParams": [{"key": "query", "value": "foo"}],
+            "headers": [{"key": "X-Request-Header", "value": "req-foo"}],
+            "body": "{data: 'test-request'}",
         }
-    )
+    }
 )
 ```
