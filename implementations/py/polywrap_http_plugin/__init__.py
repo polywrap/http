@@ -1,14 +1,23 @@
 """This package contains the HTTP plugin."""
 import base64
-from typing import Optional, cast
+from typing import List, Optional, cast
 
 from httpx import Client
 from httpx import Response as HttpxResponse
-from polywrap_core import InvokerClient, UriPackageOrWrapper
+from httpx._types import RequestFiles
+from polywrap_core import InvokerClient
 from polywrap_msgpack import GenericMap
 from polywrap_plugin import PluginPackage
 
-from .wrap import ArgsGet, ArgsPost, Module, Response, ResponseType, manifest
+from .wrap import (
+    ArgsGet,
+    ArgsPost,
+    FormDataEntry,
+    Module,
+    Response,
+    ResponseType,
+    manifest,
+)
 
 
 def _is_response_binary(args: ArgsGet) -> bool:
@@ -33,8 +42,8 @@ class HttpPlugin(Module[None]):
         super().__init__(None)
         self.client = Client()
 
-    async def get(
-        self, args: ArgsGet, client: InvokerClient[UriPackageOrWrapper], env: None
+    def get(
+        self, args: ArgsGet, client: InvokerClient, env: None
     ) -> Optional[Response]:
         """Make a GET request to the given URL."""
         res: HttpxResponse
@@ -65,8 +74,8 @@ class HttpPlugin(Module[None]):
             body=res.text,
         )
 
-    async def post(
-        self, args: ArgsPost, client: InvokerClient[UriPackageOrWrapper], env: None
+    def post(
+        self, args: ArgsPost, client: InvokerClient, env: None
     ) -> Optional[Response]:
         """Make a POST request to the given URL."""
         res: HttpxResponse
@@ -78,13 +87,27 @@ class HttpPlugin(Module[None]):
                 if args["request"]["body"] is not None
                 else None
             )
+
+            files = self._get_files_from_form_data(
+                args["request"].get("formData") or []
+            )
+
+            if args["request"].get("headers"):
+                headers = cast(GenericMap[str, str], args["request"]["headers"])
+                if headers["Content-Type"] == "multipart/form-data":
+                    # Let httpx handle the content type if it's multipart/form-data
+                    # because it will automatically generate the boundary.
+                    del headers["Content-Type"]
+
             res = self.client.post(
                 args["url"],
                 content=content,
+                files=files,
                 params=args["request"].get("urlParams"),
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
             )
+
         else:
             res = self.client.post(args["url"])
 
@@ -102,6 +125,19 @@ class HttpPlugin(Module[None]):
             headers=GenericMap(dict(res.headers)),
             body=res.text,
         )
+
+    def _get_files_from_form_data(self, form_data: List[FormDataEntry]) -> RequestFiles:
+        files: RequestFiles = {}
+        for entry in form_data:
+            file_content = cast(str, entry["value"]) if entry.get("value") else ""
+            if entry.get("type"):
+                file_content = (
+                    base64.b64decode(cast(str, entry["value"]).encode())
+                    if entry.get("value")
+                    else bytes()
+                )
+            files[entry["name"]] = file_content
+        return files
 
 
 def http_plugin():
