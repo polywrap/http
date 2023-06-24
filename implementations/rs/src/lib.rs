@@ -28,11 +28,8 @@ impl Module for HttpPlugin {
         _: Arc<dyn Invoker>,
     ) -> Result<Option<Response>, PluginError> {
         let response = parse_request(&args.url, args.request.clone(), RequestMethod::GET)
-            .unwrap()
             .call()
-            .map_err(|e| PluginError::InvocationError {
-                exception: e.to_string(),
-            })?;
+            .map_err(HttpPluginError::SendRequestError)?;
 
         let response_type = if let Some(r) = &args.request {
             r.response_type
@@ -54,8 +51,7 @@ impl Module for HttpPlugin {
             &args.url,
             args.request.clone(),
             RequestMethod::POST,
-        )
-        .unwrap();
+        );
 
         let response_type = if let Some(r) = &args.request {
             r.response_type
@@ -69,14 +65,10 @@ impl Module for HttpPlugin {
             } else if let Some(form_data) = &r.form_data {
                 handle_form_data(request, form_data)?
             } else {
-                request.call().map_err(|e| PluginError::InvocationError {
-                    exception: e.to_string(),
-                })?
+                request.call().map_err(HttpPluginError::SendRequestError)?
             }
         } else {
-            request.call().map_err(|e| PluginError::InvocationError {
-                exception: e.to_string(),
-            })?
+            request.call().map_err(HttpPluginError::SendRequestError)?
         };
         let parsed_response = parse_response(response, response_type)?;
 
@@ -89,7 +81,7 @@ fn handle_form_data(request: UreqRequest, form_data: &Vec<FormDataEntry>) -> Res
     for entry in form_data.iter() {
         if entry._type.is_some() {
             if let Some(v) = &entry.value {
-                let buf = base64::decode(v).unwrap();
+                let buf = base64::decode(v).map_err(HttpPluginError::FormValueBase64DecodeError)?;
                 let cursor = Cursor::new(buf);
                 let file_name = if let Some(f) = &entry.file_name {
                     Some(f.as_str())
@@ -105,27 +97,45 @@ fn handle_form_data(request: UreqRequest, form_data: &Vec<FormDataEntry>) -> Res
         }
     }
     // Send the request with the multipart/form-data
-    let mdata = multipart.prepare().unwrap();
-    request
+    let mdata = multipart.prepare().map_err(|e| HttpPluginError::MultipartPrepareError(e.to_string()))?;
+    let result = request
         .set(
             "Content-Type",
             &format!("multipart/form-data; boundary={}", mdata.boundary()),
         )
         .send(mdata)
-        .map_err(|e| PluginError::InvocationError {
-            exception: e.to_string(),
-        })
+        .map_err(HttpPluginError::SendRequestError)?;
+    
+    Ok(result)
 }
 
-fn handle_json(request: UreqRequest, body: &String) -> Result<UreqResponse, PluginError> {
+fn handle_json(request: UreqRequest, body: &String) -> Result<UreqResponse, HttpPluginError> {
     let value = JSON::from_str::<JSON::Value>(body.as_str());
-    if let Ok(json) = value {
-        request
-            .send_json(json)
-            .map_err(|e| PluginError::InvocationError {
-                exception: e.to_string(),
-            })
-    } else {
-        return Err(PluginError::JSONError(value.unwrap_err()));
+    let json = value.map_err(HttpPluginError::JSONParseError)?;
+    
+    let result = request
+        .send_json(json)
+        .map_err(HttpPluginError::SendRequestError)?;
+
+    Ok(result)
+}
+
+#[derive(thiserror::Error, Debug)]
+pub enum HttpPluginError {
+    #[error("Error sending request: `{0}`")]
+    SendRequestError(ureq::Error),
+    #[error("Error parsing JSON: `{0}`")]
+    JSONParseError(serde_json::Error),
+    #[error("Error decoding base64 of form value: `{0}`")]
+    FormValueBase64DecodeError(base64::DecodeError),
+    #[error("Error preparing multipart data: `{0}`")]
+    MultipartPrepareError(String),
+}
+
+impl From<HttpPluginError> for PluginError {
+    fn from(e: HttpPluginError) -> Self {
+        PluginError::InvocationError {
+            exception: e.to_string(),
+        }
     }
 }
