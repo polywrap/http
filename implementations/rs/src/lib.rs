@@ -1,16 +1,18 @@
-use crate::{wrap::wrap_info::get_manifest, parse_request::parse_request, parse_response::parse_response};
+use crate::{
+    parse_request::parse_request, parse_response::parse_response, wrap::wrap_info::get_manifest,
+};
 use multipart::client::lazy::Multipart;
 use polywrap_core::invoker::Invoker;
 use polywrap_plugin::{error::PluginError, implementor::plugin_impl, JSON};
-use ureq::{Request as UreqRequest, Response as UreqResponse};
 use std::{io::Cursor, sync::Arc};
+use ureq::{Request as UreqRequest, Response as UreqResponse};
 use wrap::{
     module::{ArgsGet, ArgsPost, Module},
-    types::{Response, ResponseType, FormDataEntry},
+    types::{FormDataEntry, Response, ResponseType},
 };
-pub mod wrap;
-pub mod parse_response;
 pub mod parse_request;
+pub mod parse_response;
+pub mod wrap;
 
 pub enum RequestMethod {
     GET,
@@ -47,11 +49,7 @@ impl Module for HttpPlugin {
         args: &ArgsPost,
         _: Arc<dyn Invoker>,
     ) -> Result<Option<Response>, PluginError> {
-        let request = parse_request(
-            &args.url,
-            args.request.clone(),
-            RequestMethod::POST,
-        );
+        let request = parse_request(&args.url, args.request.clone(), RequestMethod::POST);
 
         let response_type = if let Some(r) = &args.request {
             r.response_type
@@ -76,7 +74,10 @@ impl Module for HttpPlugin {
     }
 }
 
-fn handle_form_data(request: UreqRequest, form_data: &Vec<FormDataEntry>) -> Result<UreqResponse, PluginError> {
+fn handle_form_data(
+    request: UreqRequest,
+    form_data: &Vec<FormDataEntry>,
+) -> Result<UreqResponse, PluginError> {
     let mut multipart = Multipart::new();
     for entry in form_data.iter() {
         if entry._type.is_some() {
@@ -97,7 +98,9 @@ fn handle_form_data(request: UreqRequest, form_data: &Vec<FormDataEntry>) -> Res
         }
     }
     // Send the request with the multipart/form-data
-    let mdata = multipart.prepare().map_err(|e| HttpPluginError::MultipartPrepareError(e.to_string()))?;
+    let mdata = multipart
+        .prepare()
+        .map_err(|e| HttpPluginError::MultipartPrepareError(e.to_string()))?;
     let result = request
         .set(
             "Content-Type",
@@ -105,14 +108,14 @@ fn handle_form_data(request: UreqRequest, form_data: &Vec<FormDataEntry>) -> Res
         )
         .send(mdata)
         .map_err(HttpPluginError::SendRequestError)?;
-    
+
     Ok(result)
 }
 
 fn handle_json(request: UreqRequest, body: &String) -> Result<UreqResponse, HttpPluginError> {
     let value = JSON::from_str::<JSON::Value>(body.as_str());
     let json = value.map_err(HttpPluginError::JSONParseError)?;
-    
+
     let result = request
         .send_json(json)
         .map_err(HttpPluginError::SendRequestError)?;

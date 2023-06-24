@@ -1,10 +1,6 @@
-use crate::{RequestMethod, wrap::types::Request};
+use crate::{wrap::types::Request, RequestMethod};
 
-pub fn parse_request(
-    url: &str,
-    request: Option<Request>,
-    method: RequestMethod,
-) -> ureq::Request {
+pub fn parse_request(url: &str, request: Option<Request>, method: RequestMethod) -> ureq::Request {
     let mut request_builder = match method {
         RequestMethod::GET => ureq::get(url),
         RequestMethod::POST => ureq::post(url),

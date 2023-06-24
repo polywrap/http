@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 use std::io::Read;
 
-use polywrap_plugin::{Map, error::PluginError};
-use crate::wrap::types::{ResponseType, Response};
+use crate::wrap::types::{Response, ResponseType};
+use polywrap_plugin::{error::PluginError, Map};
 
 pub fn parse_response(
     response: ureq::Response,
@@ -12,12 +12,10 @@ pub fn parse_response(
         .headers_names()
         .iter()
         .map(|header_name| {
-            let header_value = response.header(header_name)
+            let header_value = response
+                .header(header_name)
                 .ok_or(ParseResponseError::HeaderNotFound(header_name.to_string()))?;
-            Ok((
-                header_name.to_string(),
-                header_value.to_string(),
-            ))
+            Ok((header_name.to_string(), header_value.to_string()))
         })
         .collect::<Result<BTreeMap<String, String>, ParseResponseError>>()?;
     let headers = Map(headers);
