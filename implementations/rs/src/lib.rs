@@ -31,7 +31,7 @@ impl Module for HttpPlugin {
     ) -> Result<Option<Response>, PluginError> {
         let response = parse_request(&args.url, args.request.clone(), RequestMethod::GET)
             .call()
-            .map_err(HttpPluginError::SendRequestError)?;
+            .map_err(|e| HttpPluginError::SendRequestError(e.to_string()))?;
 
         let response_type = if let Some(r) = &args.request {
             r.response_type
@@ -63,10 +63,10 @@ impl Module for HttpPlugin {
             } else if let Some(form_data) = &r.form_data {
                 handle_form_data(request, form_data)?
             } else {
-                request.call().map_err(HttpPluginError::SendRequestError)?
+                request.call().map_err(|e| HttpPluginError::SendRequestError(e.to_string()))?
             }
         } else {
-            request.call().map_err(HttpPluginError::SendRequestError)?
+            request.call().map_err(|e| HttpPluginError::SendRequestError(e.to_string()))?
         };
         let parsed_response = parse_response(response, response_type)?;
 
@@ -76,7 +76,7 @@ impl Module for HttpPlugin {
 
 fn handle_form_data(
     request: UreqRequest,
-    form_data: &Vec<FormDataEntry>,
+    form_data: &[FormDataEntry],
 ) -> Result<UreqResponse, PluginError> {
     let mut multipart = Multipart::new();
     for entry in form_data.iter() {
@@ -84,17 +84,11 @@ fn handle_form_data(
             if let Some(v) = &entry.value {
                 let buf = base64::decode(v).map_err(HttpPluginError::FormValueBase64DecodeError)?;
                 let cursor = Cursor::new(buf);
-                let file_name = if let Some(f) = &entry.file_name {
-                    Some(f.as_str())
-                } else {
-                    None
-                };
+                let file_name = entry.file_name.as_deref();
                 multipart.add_stream(entry.name.as_str(), cursor, file_name, None);
             };
-        } else {
-            if let Some(v) = &entry.value {
-                multipart.add_text(entry.name.as_str(), v);
-            };
+        } else if let Some(v) = &entry.value {
+            multipart.add_text(entry.name.as_str(), v);
         }
     }
     // Send the request with the multipart/form-data
@@ -107,18 +101,18 @@ fn handle_form_data(
             &format!("multipart/form-data; boundary={}", mdata.boundary()),
         )
         .send(mdata)
-        .map_err(HttpPluginError::SendRequestError)?;
+        .map_err(|e| HttpPluginError::SendRequestError(e.to_string()))?;
 
     Ok(result)
 }
 
-fn handle_json(request: UreqRequest, body: &String) -> Result<UreqResponse, HttpPluginError> {
-    let value = JSON::from_str::<JSON::Value>(body.as_str());
+fn handle_json(request: UreqRequest, body: &str) -> Result<UreqResponse, HttpPluginError> {
+    let value = JSON::from_str::<JSON::Value>(body);
     let json = value.map_err(HttpPluginError::JSONParseError)?;
 
     let result = request
         .send_json(json)
-        .map_err(HttpPluginError::SendRequestError)?;
+        .map_err(|e| HttpPluginError::SendRequestError(e.to_string()))?;
 
     Ok(result)
 }
@@ -126,7 +120,7 @@ fn handle_json(request: UreqRequest, body: &String) -> Result<UreqResponse, Http
 #[derive(thiserror::Error, Debug)]
 pub enum HttpPluginError {
     #[error("Error sending request: `{0}`")]
-    SendRequestError(ureq::Error),
+    SendRequestError(String),
     #[error("Error parsing JSON: `{0}`")]
     JSONParseError(serde_json::Error),
     #[error("Error decoding base64 of form value: `{0}`")]
