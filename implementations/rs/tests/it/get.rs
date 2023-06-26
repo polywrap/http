@@ -1,6 +1,6 @@
-use polywrap_http_plugin::wrap::types::Response;
 use polywrap_core::uri::Uri;
-use polywrap_msgpack::{msgpack, serialize};
+use polywrap_http_plugin::wrap::types::Response;
+use polywrap_msgpack::encode;
 use polywrap_plugin::{Map, JSON};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -12,15 +12,20 @@ struct ExpectedResponse {
     id: u32,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+struct ArgsGet {
+    url: String,
+}
+
 #[test]
 fn simple_get() {
     let response = get_client()
         .invoke::<Response>(
             &Uri::try_from("plugin/http").unwrap(),
             "get",
-            Some(&msgpack!({
-                "url": "https://jsonplaceholder.typicode.com/todos/1",
-            })),
+            Some(&encode(&ArgsGet {
+                url: "https://jsonplaceholder.typicode.com/todos/1".to_string(),
+            }).unwrap()),
             None,
             None,
         )
@@ -47,8 +52,8 @@ struct Request {
 
 #[test]
 fn params_get() {
-    let mut params = Map(BTreeMap::new());
-    params.0.insert("id".to_string(), "1".to_string());
+    let mut params = BTreeMap::new();
+    params.insert("id".to_string(), "1".to_string());
 
     let args = GetArgs {
         url: "https://jsonplaceholder.typicode.com/todos".to_string(),
@@ -61,7 +66,7 @@ fn params_get() {
         .invoke::<Response>(
             &Uri::try_from("plugin/http").unwrap(),
             "get",
-            Some(&serialize(&args).unwrap()),
+            Some(&encode(&args).unwrap()),
             None,
             None,
         )

@@ -14,8 +14,7 @@ mod post;
 
 pub fn get_client() -> PolywrapClient {
     let http_plugin = HttpPlugin {};
-    let plugin_pkg: PluginPackage = http_plugin.into();
-    let package = Arc::new(plugin_pkg);
+    let package = Arc::new(PluginPackage::from(http_plugin));
 
     let resolver = StaticResolver::from(vec![StaticResolverLike::Package(
         Uri::try_from("plugin/http").unwrap(),

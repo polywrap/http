@@ -14,13 +14,13 @@ pub fn parse_request(
 
     if let Some(request) = request {
         if let Some(url_params) = request.url_params {
-            for (key, value) in url_params.0.iter() {
+            for (key, value) in url_params.iter() {
                 request_builder = request_builder.query(key, value);
             }
         };
 
         if let Some(headers) = request.headers {
-            for (name, value) in headers.0.iter() {
+            for (name, value) in headers.iter() {
                 request_builder = request_builder.set(name, value)
             }
         }

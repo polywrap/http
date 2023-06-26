@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use polywrap_plugin::{Map, error::PluginError};
+use polywrap_plugin::{error::PluginError};
 
 use crate::wrap::types::{ResponseType, Response};
 
@@ -18,7 +18,6 @@ pub fn parse_response(
             )
         })
         .collect::<BTreeMap<String, String>>();
-    let headers = Map(headers);
     let status = response.status();
     let status_text = response.status_text().to_string();
 
