@@ -1,5 +1,5 @@
-use polywrap_http_plugin::wrap::types::Response;
 use polywrap_core::uri::Uri;
+use polywrap_http_plugin::wrap::types::Response;
 use polywrap_msgpack::{msgpack, serialize};
 use polywrap_plugin::{Map, JSON};
 use serde::{Deserialize, Serialize};

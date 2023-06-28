@@ -1,12 +1,6 @@
-use polywrap_plugin::error::PluginError;
+use crate::{wrap::types::Request, RequestMethod};
 
-use crate::{RequestMethod, wrap::types::Request};
-
-pub fn parse_request(
-    url: &str,
-    request: Option<Request>,
-    method: RequestMethod,
-) -> Result<ureq::Request, PluginError> {
+pub fn parse_request(url: &str, request: Option<Request>, method: RequestMethod) -> ureq::Request {
     let mut request_builder = match method {
         RequestMethod::GET => ureq::get(url),
         RequestMethod::POST => ureq::post(url),
@@ -26,5 +20,5 @@ pub fn parse_request(
         }
     }
 
-    Ok(request_builder)
+    request_builder
 }
