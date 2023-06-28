@@ -1,16 +1,21 @@
 from base64 import b64decode
 import json
+from mocket import mocketize
 from polywrap_http_plugin import Response
 from polywrap_client import PolywrapClient
 from polywrap_core import Uri
 
+from .mock_http import create_client
 
-def test_simple_post(client: PolywrapClient):
+
+@mocketize
+def test_simple_post():
+    client = create_client()
     response: Response = client.invoke(
         uri=Uri.from_str("plugin/http"),
         method="post",
         args={
-            "url": "https://jsonplaceholder.typicode.com/todos",
+            "url": "https://example.none/todos",
             "request": {
                 "body": json.dumps(
                     {
@@ -25,15 +30,17 @@ def test_simple_post(client: PolywrapClient):
 
     assert response["status"] == 201
     assert response["body"] is not None
-    assert json.loads(response["body"])["id"] == 201
+    assert json.loads(response["body"])["id"] == 101
 
 
-def test_binary_post(client: PolywrapClient):
+@mocketize
+def test_binary_post():
+    client = create_client()
     response: Response = client.invoke(
         uri=Uri.from_str("plugin/http"),
         method="post",
         args={
-            "url": "https://jsonplaceholder.typicode.com/todos",
+            "url": "https://example.none/todos",
             "request": {
                 "responseType": 1,
                 "body": json.dumps(
@@ -49,4 +56,4 @@ def test_binary_post(client: PolywrapClient):
 
     assert response["status"] == 201
     assert response["body"] is not None
-    assert json.loads(b64decode(response["body"]).decode("utf-8"))["id"] == 201
+    assert json.loads(b64decode(response["body"]).decode("utf-8"))["id"] == 101
