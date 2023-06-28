@@ -1,15 +1,19 @@
 from base64 import b64decode
 import json
+from mocket import mocketize
 from polywrap_http_plugin import Response
-from polywrap_client import PolywrapClient
 from polywrap_core import Uri
 
+from .mock_http import create_client
 
-def test_simple_get(client: PolywrapClient):
+@mocketize
+def test_simple_get():
+    client = create_client()
+
     response: Response = client.invoke(
         uri=Uri.from_str("plugin/http"),
         method="get",
-        args={"url": "https://jsonplaceholder.typicode.com/todos/1"},
+        args={"url": "https://example.none/todos/1"},
     )
 
     assert response["status"] == 200
@@ -17,15 +21,18 @@ def test_simple_get(client: PolywrapClient):
     assert json.loads(response["body"])["id"] == 1
 
 
-def test_params_get(client: PolywrapClient):
+@mocketize
+def test_params_get():
+    client = create_client()
+
     response: Response = client.invoke(
         uri=Uri.from_str("plugin/http"),
         method="get",
         args={
-            "url": "https://jsonplaceholder.typicode.com/todos",
+            "url": "https://example.none/todos",
             "request": {
                 "urlParams": {
-                    "id": 1,
+                    "id": 2,
                 },
             },
         },
@@ -33,15 +40,17 @@ def test_params_get(client: PolywrapClient):
 
     assert response["status"] == 200
     assert response["body"] is not None
-    assert len(json.loads(response["body"])) == 1
+    assert json.loads(response["body"])["id"] == 2
 
+@mocketize
+def test_binary_get():
+    client = create_client()
 
-def test_binary_get(client: PolywrapClient):
     response: Response = client.invoke(
         uri=Uri.from_str("plugin/http"),
         method="get",
         args={
-            "url": "https://jsonplaceholder.typicode.com/todos/1",
+            "url": "https://example.none/todos/1",
             "request": {
                 "responseType": 1,
             },

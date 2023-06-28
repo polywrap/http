@@ -34,6 +34,7 @@ tox = "^3.26.0"
 tox-poetry = "^0.4.1"
 pytest-mock = "^3.10.0"
 pydocstyle = "^6.3.0"
+mocket = "^3.11.1"
 
 [tool.bandit]
 exclude_dirs = ["tests"]
