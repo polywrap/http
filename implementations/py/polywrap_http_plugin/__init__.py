@@ -48,16 +48,17 @@ class HttpPlugin(Module[None]):
         """Make a GET request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
-            res = self.client.get(args["url"])
+            res = self.client.get(args["url"], follow_redirects=True)
         elif args["request"] is not None:
             res = self.client.get(
                 args["url"],
                 params=args["request"].get("urlParams"),
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
+                follow_redirects=True,
             )
         else:
-            res = self.client.get(args["url"])
+            res = self.client.get(args["url"], follow_redirects=True)
 
         if _is_response_binary(args):
             return Response(
@@ -80,7 +81,7 @@ class HttpPlugin(Module[None]):
         """Make a POST request to the given URL."""
         res: HttpxResponse
         if args.get("request") is None:
-            res = self.client.post(args["url"])
+            res = self.client.post(args["url"], follow_redirects=True)
         elif args["request"] is not None:
             content = (
                 args["request"]["body"].encode()
@@ -106,10 +107,11 @@ class HttpPlugin(Module[None]):
                 params=args["request"].get("urlParams"),
                 headers=args["request"].get("headers"),
                 timeout=cast(float, args["request"].get("timeout")),
+                follow_redirects=True,
             )
 
         else:
-            res = self.client.post(args["url"])
+            res = self.client.post(args["url"], follow_redirects=True)
 
         if _is_response_binary(args):
             return Response(
