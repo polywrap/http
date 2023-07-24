@@ -1,6 +1,13 @@
-# HTTP Wrap Interface
+# The HTTP Wrap Interface
 
-An interface for building HTTP implementations as wraps.
+This interface defines methods used by the Polywrap Client to make HTTP requests.
 
-## Known Implementations
-[Link](https://github.com/polywrap/http/tree/master/implementations)
+These are usually implemented as plugins.
+
+## Implementations
+
+Example implementations of this interface can be found in the [HTTP Wrap repository](https://github.com/polywrap/http).
+
+## Support
+
+For any questions or problems related to the Ethers wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).
