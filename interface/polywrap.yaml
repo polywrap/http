@@ -1,6 +1,6 @@
 format: 0.5.0
 project:
-  name: http-interface
+  name: http
   type: interface
 source:
   schema: ./polywrap.graphql
