@@ -1,5 +1,5 @@
 {
-  "name": "@polywrap/http-interface",
+  "name": "http",
   "private": true,
   "scripts": {
     "build": "npx polywrap build",

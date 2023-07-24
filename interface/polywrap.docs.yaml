@@ -1,5 +1,5 @@
-format:  0.1.0
-description:  Interface for the HTTP Wrap
-website:  https://polywrap.io
+format: 0.1.0
+description: HTTP wrap interface.
+website: https://polywrap.io
 repository: https://github.com/polywrap/http
-readme:  ./README.md
+readme: ./README.md

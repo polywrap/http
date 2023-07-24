@@ -1,1 +1,1 @@
-wrap://ipfs/Qmb7k3fZq8sPQpBtL1NWBNdudKoj44hrB85fANUo6wHExK
+wrap://http/https://wraps.wrapscan.io/r/polywrap/http@1.0.0
