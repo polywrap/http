@@ -10,4 +10,4 @@ Example implementations of this interface can be found in the [HTTP Wrap reposit
 
 ## Support
 
-For any questions or problems related to the Ethers wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).
+For any questions or problems related to this wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).
