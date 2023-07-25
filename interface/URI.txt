@@ -1,1 +1,1 @@
-wrap://http/https://wraps.wrapscan.io/r/polywrap/http@1.0.0
+wrap://http/https://wraps.wrapscan.io/r/polywrap/http@1.0.1
