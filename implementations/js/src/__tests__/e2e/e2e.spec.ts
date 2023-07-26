@@ -1,7 +1,7 @@
 import { httpPlugin } from "../..";
 import { Response } from "../../wrap";
 
-import { PolywrapClient, ClientConfigBuilder } from "@polywrap/client-js";
+import { PolywrapClient, PolywrapClientConfigBuilder } from "@polywrap/client-js";
 
 import nock from "nock";
 import { WrapError } from "@polywrap/core-js";
@@ -28,8 +28,8 @@ describe("e2e tests for HttpPlugin", () => {
 
   beforeEach(() => {
     polywrapClient = new PolywrapClient(
-      new ClientConfigBuilder()
-        .addPackage(
+      new PolywrapClientConfigBuilder()
+        .setPackage(
           pluginUri, httpPlugin({})
         ).build()
     );

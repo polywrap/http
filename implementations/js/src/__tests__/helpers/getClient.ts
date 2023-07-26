@@ -2,15 +2,15 @@ import { httpPlugin } from "../..";
 
 import {
   PolywrapClient,
-  ClientConfigBuilder
+  PolywrapClientConfigBuilder
 } from "@polywrap/client-js";
 
-export const pluginUri = "ens/wraps.eth:http@1.1.0";
+export const pluginUri = "wrapscan.io/polywrap/http@1.0";
 
 export const getClient = () => {
-  const config = new ClientConfigBuilder()
+  const config = new PolywrapClientConfigBuilder()
     .addDefaults()
-    .addPackage(
+    .setPackage(
       pluginUri,
       httpPlugin({ })
     ).build();

@@ -6,5 +6,5 @@ source:
   schema: ./polywrap.graphql
   module: ./src/index.ts
   import_abis:
-    - uri: "ens/wraps.eth:http@1.1.0"
+    - uri: "wrapscan.io/polywrap/http@1.0"
       abi: ../../../../../../interface/polywrap.graphql
