@@ -2,79 +2,12 @@ import Foundation
 
 import PolywrapClient
 
-public struct ArgsGet: Codable {
-    var url: String
-    var request: Request?
-
-    public init(url: String, request: Request? = nil) {
-        self.url = url
-        self.request = request
-    }
-}
-
-public struct ArgsPost {
-    var url: String
-    var request: Request?
-    
-    public init(url: String, request: Request? = nil) {
-        self.url = url
-        self.request = request
-    }
-}
-
-public struct Response: Codable {
-    var status: Int
-    var statusText: String
-    var headers: Dictionary<String, String>?
-    var body: String?
-}
-
-public struct Request: Codable {
-    var headers: Dictionary<String, String>?
-    var urlParams: Dictionary<String, String>?
-    var responseType: ResponseType
-    var body: String?
-    var formData: [FormDataEntry]?
-    var timeout: UInt32?
-    
-    public init(
-        headers: Dictionary<String, String>? = nil,
-        urlParams: Dictionary<String, String>? = nil,
-        responseType: ResponseType,
-        body: String? = nil,
-        formData: [FormDataEntry]? = nil,
-        timeout: UInt32? = nil
-    ) {
-        self.headers = headers
-        self.urlParams = urlParams
-        self.responseType = responseType
-        self.body = body
-        self.formData = formData
-        self.timeout = timeout
-    }
-}
-
-public enum ResponseType: Codable {
-    case TEXT
-    case BINARY
-}
-
-public struct FormDataEntry: Codable {
-    var name: String
-    var value: String?
-    var fileName: String?
-    var type: String?
-}
-
 public enum PluginError: Error {
     case BadRequest
 }
 
-public class HttpPlugin: Plugin {
-    public override init() {
-        super.init()
-        super.addMethod(name: "get", closure: get)
-    }
+public class HttpPlugin: PluginModule {
+    public override init() {}
     
     public func get(_ args: ArgsGet) async -> Response {
         return await withCheckedContinuation{ continuation in

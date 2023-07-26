@@ -15,7 +15,7 @@ final class HttpPluginTests: XCTestCase {
         let headers = ["Accept":"application/json"]
         let request = Request(headers: headers, responseType: .TEXT)
         let args = ArgsGet(url: "https://reqbin.com/echo/get/json", request: request)
-        let response = try await plugin.get(args)
+        let response = await plugin.get(args)
         
         if let body = response.body {
             let r = try! JSONDecoder().decode(ExpectedResponse.self, from: body.data(using: .utf8)!)
@@ -47,12 +47,5 @@ final class HttpPluginTests: XCTestCase {
             let r = try! JSONDecoder().decode(ExpectedResponse.self, from: body.data(using: .utf8)!)
             XCTAssert(r.success == "true")
         }
-    }
-    
-    func testGetManifest() async throws {
-        let resolver = HttpUriResolverPlugin()
-        let args = ArgsTryResolverUri(authority: "https", path: "https://raw.githubusercontent.com/polywrap/wrap-test-harness/v0.2.1/wrappers/subinvoke/00-subinvoke/implementations/as")
-        let response = try await resolver.tryResolveUri(args)
-        XCTAssert(response?.manifest is [UInt8])
     }
 }
