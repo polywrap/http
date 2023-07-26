@@ -13,8 +13,8 @@ Http plugin currently supports two different methods `GET` and `POST`. Similar t
 Below is sample invocation of the `GET` request with custom request headers and query parameters (`urlParams`).
 
 ```ts
-const result = await polywrapClient.invoke<Response>({
-  uri: "wrap://ens/http.polywrap.eth",
+const result = await client.invoke<Response>({
+  uri: "wrapscan.io/polywrap/http@1.0",
   method: "get",
   args: {
     url: "http://www.example.com/api",
@@ -33,7 +33,7 @@ Below is sample invocation of the `POST` request with custom request headers and
 
 ```ts
 const response = await polywrapClient.invoke<Response>({
-  uri: "wrap://ens/http.polywrap.eth",
+  uri: "wrapscan.io/polywrap/http@1.0",
   method: "post",
   args: {
     url: "http://www.example.com/api",
