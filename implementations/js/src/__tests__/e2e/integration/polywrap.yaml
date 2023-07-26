@@ -3,8 +3,8 @@ project:
   name: HTTP-Integration
   type: wasm/assemblyscript
 source:
-  schema: ./schema.graphql
+  schema: ./polywrap.graphql
   module: ./src/index.ts
   import_abis:
-    - uri: "ens/wraps.eth:http@1.1.0"
-      abi: ../../../../../../interface/src/schema.graphql
+    - uri: "wrapscan.io/polywrap/http@1.0"
+      abi: ../../../../../../interface/polywrap.graphql

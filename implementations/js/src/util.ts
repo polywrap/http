@@ -1,8 +1,8 @@
 import {
-  Http_Request,
-  Http_Response,
-  Http_ResponseTypeEnum,
-  Http_FormDataEntry,
+  Request,
+  Response,
+  ResponseTypeEnum,
+  FormDataEntry,
 } from "./wrap";
 
 import { AxiosResponse, AxiosRequestConfig } from "axios";
@@ -15,7 +15,7 @@ import FormData from "form-data";
  */
 export function fromAxiosResponse(
   axiosResponse: AxiosResponse<unknown>
-): Http_Response {
+): Response {
   const responseHeaders = new Map<string, string>();
   for (const key of Object.keys(axiosResponse.headers)) {
     responseHeaders.set(
@@ -70,13 +70,13 @@ export function fromAxiosResponse(
  * @param request
  */
 export function toAxiosRequestConfig(
-  request: Http_Request
+  request: Request
 ): AxiosRequestConfig {
   let responseType: "text" | "arraybuffer" = "text";
 
   switch (request.responseType) {
     case "BINARY":
-    case Http_ResponseTypeEnum.BINARY:
+    case ResponseTypeEnum.BINARY:
       responseType = "arraybuffer";
   }
 
@@ -99,7 +99,7 @@ export function toAxiosRequestConfig(
   return config;
 }
 
-export function toFormData(entries: Http_FormDataEntry[]): FormData {
+export function toFormData(entries: FormDataEntry[]): FormData {
   const fd = new FormData();
   entries.forEach((entry) => {
     const options: FormData.AppendOptions = {};

@@ -3,7 +3,7 @@ import {
   Module,
   Args_get,
   Args_post,
-  Http_Response,
+  Response,
   manifest,
 } from "./wrap";
 import { fromAxiosResponse, toAxiosRequestConfig, toFormData } from "./util";
@@ -17,7 +17,7 @@ export class HttpPlugin extends Module<NoConfig> {
   public async get(
     args: Args_get,
     _client: CoreClient
-  ): Promise<Http_Response | null> {
+  ): Promise<Response | null> {
     const response = await axios.get<string>(
       args.url,
       args.request ? toAxiosRequestConfig(args.request) : undefined
@@ -28,7 +28,7 @@ export class HttpPlugin extends Module<NoConfig> {
   public async post(
     args: Args_post,
     _client: CoreClient
-  ): Promise<Http_Response | null> {
+  ): Promise<Response | null> {
     let response: AxiosResponse;
     if (args.request?.body) {
       response = await axios.post(
