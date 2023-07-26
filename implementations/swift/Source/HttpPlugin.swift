@@ -6,32 +6,36 @@ public enum PluginError: Error {
     case BadRequest
 }
 
-public class HttpPlugin: PluginModule {
-    public override init() {}
-    
-    public func get(_ args: ArgsGet) async -> Response {
-        return await withCheckedContinuation{ continuation in
-            get(args: args) { result in
-                switch result {
-                case .success(let value):
-                    continuation.resume(returning: value)
-                    
-                case .failure(let error):
-                    print(error)
+public class HttpPlugin: Plugin {
+    public var methodsMap: [String: PluginMethod] = [:]
+
+    public func get(_ args: ArgsGet, _ env: VoidCodable?, _ invoker: Invoker) throws -> Response {
+        return try runBlocking {
+            return try await withCheckedThrowingContinuation{ continuation in
+                get(args: args) { result in
+                    switch result {
+                    case .success(let value):
+                        continuation.resume(returning: value)
+                        
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
         }
     }
     
-    public func post(_ args: ArgsPost) async throws -> Response {
-        return try await withCheckedThrowingContinuation{ continuation in
-            post(args: args) { result in
-                switch result {
-                case .success(let value):
-                    continuation.resume(returning: value)
-                    
-                case .failure(let error):
-                    continuation.resume(throwing: error)
+    public func post(_ args: ArgsPost, _ env: VoidCodable?, _ invoker: Invoker) throws -> Response {
+        return try runBlocking {
+            return try await withCheckedThrowingContinuation{ continuation in
+                post(args: args) { result in
+                    switch result {
+                    case .success(let value):
+                        continuation.resume(returning: value)
+                        
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
         }
@@ -147,4 +151,11 @@ public class HttpPlugin: PluginModule {
             return "Unknown"
         }
     }
+}
+
+func getHttpPlugin() -> Plugin {
+    var plugin = HttpPlugin()
+    plugin.addMethod(name: "get", closure: plugin.get)
+    plugin.addMethod(name: "post", closure: plugin.post)
+    return plugin
 }

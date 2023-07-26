@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/polywrap/swift-client",
       "state" : {
-        "branch" : "main",
-        "revision" : "28fff41a4044470792616f8fcdb2d5f728d1ec16"
+        "branch" : "refactor/plugin-module",
+        "revision" : "497e4e9a2300b6584ce17f5373130f3e4de5e653"
       }
     },
     {

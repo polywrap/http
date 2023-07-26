@@ -8,7 +8,7 @@ public struct ArgsGet: Codable {
     }
 }
 
-public struct ArgsPost {
+public struct ArgsPost: Codable {
     var url: String
     var request: Request?
 
