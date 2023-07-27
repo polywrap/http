@@ -20,3 +20,7 @@ jobs:
       - name: Build Package
         run: swift build
         working-directory: ./implementations/swift
+      
+      - name: Run Tests
+        run: swift test
+        working-directory: ./implementations/swift
