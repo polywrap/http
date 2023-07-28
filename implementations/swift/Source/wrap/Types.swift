@@ -1,63 +1,67 @@
-public struct ArgsGet: Codable {
-    var url: String
-    var request: Request?
+// NOTE: This is an auto-generated file.
+// All modifications will be overwritten.
 
-    public init(url: String, request: Request? = nil) {
-        self.url = url
-        self.request = request
-    }
-}
+import PolywrapClient
+import Foundation
 
-public struct ArgsPost: Codable {
-    var url: String
-    var request: Request?
+// Env START //
 
-    public init(url: String, request: Request? = nil) {
-        self.url = url
-        self.request = request
-    }
-}
+
+// Env END //
+
+// Objects START //
 
 public struct Response: Codable {
-    var status: Int
-    var statusText: String
-    var headers: [String: String]?
-    var body: String?
+    var status: Int32,
+    var statusText: String,
+    var headers: [String: String]?,
+    var body: String?,
 }
 
 public struct Request: Codable {
-    var headers: [String: String]?
-    var urlParams: [String: String]?
-    var responseType: ResponseType
-    var body: String?
-    var formData: [FormDataEntry]?
-    var timeout: UInt32?
-
-    public init(
-        headers: [String: String]? = nil,
-        urlParams: [String: String]? = nil,
-        responseType: ResponseType,
-        body: String? = nil,
-        formData: [FormDataEntry]? = nil,
-        timeout: UInt32? = nil
-    ) {
-        self.headers = headers
-        self.urlParams = urlParams
-        self.responseType = responseType
-        self.body = body
-        self.formData = formData
-        self.timeout = timeout
-    }
+    var headers: [String: String]?,
+    var urlParams: [String: String]?,
+    var responseType: ResponseType,
+    var body: String?,
+    var formData: Array<FormDataEntry>?,
+    var timeout: UInt32?,
 }
 
-public enum ResponseType: Codable {
+public struct FormDataEntry: Codable {
+    var name: String,
+    var value: String?,
+    var fileName: String?,
+    var type: String?,
+}
+
+
+// Objects END //
+
+// Enums START //
+
+public enum ResponseType: String, Codable {
     case TEXT
     case BINARY
 }
 
-public struct FormDataEntry: Codable {
-    var name: String
-    var value: String?
-    var fileName: String?
-    var type: String?
-}
+
+// Enums END //
+
+// Imported objects START //
+
+
+// Imported objects END //
+
+// Imported envs START //
+
+
+// Imported envs END //
+
+// Imported enums START //
+
+
+// Imported enums END //
+
+// Imported modules START //
+
+// Imported Modules END //
