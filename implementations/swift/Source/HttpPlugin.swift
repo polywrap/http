@@ -9,7 +9,7 @@ public enum PluginError: Error {
 public class HttpPlugin: Plugin {
     public var methodsMap: [String: PluginMethod] = [:]
 
-    public func get(_ args: ArgsGet, _ env: VoidCodable?, _ invoker: Invoker) throws -> Response {
+    public func get(_ args: ArgsGet, _ env: VoidCodable?, _ invoker: Invoker) throws -> Response? {
         return try runBlocking {
             return try await withCheckedThrowingContinuation{ continuation in
                 get(args: args) { result in
@@ -25,7 +25,7 @@ public class HttpPlugin: Plugin {
         }
     }
     
-    public func post(_ args: ArgsPost, _ env: VoidCodable?, _ invoker: Invoker) throws -> Response {
+    public func post(_ args: ArgsPost, _ env: VoidCodable?, _ invoker: Invoker) throws -> Response? {
         return try runBlocking {
             return try await withCheckedThrowingContinuation{ continuation in
                 post(args: args) { result in
@@ -124,12 +124,12 @@ public class HttpPlugin: Plugin {
         }
         
         let httpResponse = httpResponse as? HTTPURLResponse
-        let text = statusText(forStatusCode: httpResponse!.statusCode)
-        let response = Response.init(status: httpResponse!.statusCode, statusText: text, body: body)
+        let text = statusText(forStatusCode: Int32(httpResponse!.statusCode))
+        let response = Response.init(status: Int32(httpResponse!.statusCode), statusText: text, body: body)
         return response
     }
     
-    func statusText(forStatusCode statusCode: Int) -> String {
+    func statusText(forStatusCode statusCode: Int32) -> String {
         switch statusCode {
         case 200:
             return "OK"

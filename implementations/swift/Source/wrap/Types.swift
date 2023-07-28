@@ -12,26 +12,26 @@ import Foundation
 // Objects START //
 
 public struct Response: Codable {
-    var status: Int32,
-    var statusText: String,
-    var headers: [String: String]?,
-    var body: String?,
+    var status: Int32
+    var statusText: String
+    var headers: [String: String]?
+    var body: String?
 }
 
 public struct Request: Codable {
-    var headers: [String: String]?,
-    var urlParams: [String: String]?,
-    var responseType: ResponseType,
-    var body: String?,
-    var formData: Array<FormDataEntry>?,
-    var timeout: UInt32?,
+    var headers: [String: String]?
+    var urlParams: [String: String]?
+    var responseType: ResponseType
+    var body: String?
+    var formData: Array<FormDataEntry>?
+    var timeout: UInt32?
 }
 
 public struct FormDataEntry: Codable {
-    var name: String,
-    var value: String?,
-    var fileName: String?,
-    var type: String?,
+    var name: String
+    var value: String?
+    var fileName: String?
+    var type: String?
 }
 
 

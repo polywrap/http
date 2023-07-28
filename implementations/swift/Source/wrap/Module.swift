@@ -5,13 +5,13 @@ import PolywrapClient
 import Foundation
 
 public struct ArgsGet: Codable {
-    var url: String,
-    var request: Request?,
+    var url: String
+    var request: Request?
 }
 
 public struct ArgsPost: Codable {
-    var url: String,
-    var request: Request?,
+    var url: String
+    var request: Request?
 }
 
 

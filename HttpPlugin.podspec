@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
     s.osx.deployment_target = '10.15'
     s.source = { :git => "https://github.com/polywrap/http.git", :branch => 'feat/swift-implementation' }
     s.static_framework = true
-    s.dependency 'PolywrapClient', '~> 0.0.4'
+    s.dependency 'PolywrapClient', '= 0.0.5'
   end
