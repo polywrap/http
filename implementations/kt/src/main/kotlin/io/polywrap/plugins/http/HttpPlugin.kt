@@ -38,8 +38,8 @@ class HttpPlugin(config: Config? = null) : Module<HttpPlugin.Config?>(config) {
     }
 
     private suspend fun request(httpMethod: HttpMethod, url: String, request: Request?): Response {
-        val client = if (config?.httpClient != null) {
-            config.httpClient
+        val client: HttpClient = if (config?.httpClient != null) {
+            config?.httpClient!!
         } else {
             HttpClient() {
                 install(HttpTimeout)
