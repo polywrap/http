@@ -1,0 +1,10 @@
+format: 0.4.0
+project:
+  type: plugin/kotlin
+  name: http-kt
+source:
+  module: ./src/main/kotlin/io/polywrap/plugins/http/HttpPlugin.kt
+  schema: ./polywrap.graphql
+  import_abis:
+    - uri: wrapscan.io/polywrap/http@1.0
+      abi: ../../interface/polywrap.graphql

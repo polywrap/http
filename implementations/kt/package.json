@@ -1,0 +1,13 @@
+{
+  "name": "http-plugin",
+  "description": "Polywrap Http Kotlin Plugin",
+  "version": "0.10.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polywrap/http.git"
+  },
+  "devDependencies": {
+    "polywrap": "~0.11.0-pre.4"
+  }
+}
