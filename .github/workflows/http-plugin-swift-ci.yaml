@@ -1,0 +1,26 @@
+name: http-swift-ci
+
+on:
+  pull_request:
+    paths:
+      - "implementations/swift/**"
+
+jobs:
+  ci:
+    name: swift-http-ci
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build Pod
+        run: pod spec lint --allow-warnings --verbose
+
+      - name: Build Package
+        run: swift build
+        working-directory: ./implementations/swift
+      
+      - name: Run Tests
+        run: swift test
+        working-directory: ./implementations/swift
