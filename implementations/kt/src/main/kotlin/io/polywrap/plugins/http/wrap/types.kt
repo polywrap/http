@@ -6,12 +6,14 @@ package io.polywrap.plugins.http.wrap
 import io.polywrap.core.Invoker
 import io.polywrap.core.InvokeResult
 import io.polywrap.core.resolution.Uri
-import io.polywrap.core.msgpack.GenericMap
+import io.polywrap.core.msgpack.GenericMapExtensionSerializer
 import kotlinx.serialization.Serializable
 
 typealias BigInt = String
 typealias BigNumber = String
 typealias Json = String
+typealias GenericMap<K, V> = @Serializable(with = GenericMapExtensionSerializer::class) io.polywrap.core.msgpack.GenericMap<K,V>
+
 
 /// Env START ///
 /// Env END ///
