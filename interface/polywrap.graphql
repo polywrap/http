@@ -2,7 +2,7 @@ type Response {
   status: Int!
   statusText: String!
   headers: Map @annotate(type: "Map<String!, String!>")
-  body: JSON
+  body: String
 }
 
 type Request {
