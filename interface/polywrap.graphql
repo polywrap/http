@@ -2,7 +2,7 @@ type Response {
   status: Int!
   statusText: String!
   headers: Map @annotate(type: "Map<String!, String!>")
-  body: String
+  body: JSON
 }
 
 type Request {
@@ -10,7 +10,7 @@ type Request {
   urlParams: Map @annotate(type: "Map<String!, String!>")
   responseType: ResponseType!
   """The body of the request. If present, the `formData` property will be ignored."""
-  body: String
+  body: JSON
   """
   An alternative to the standard request body, 'formData' is expected to be in the 'multipart/form-data' format.
   If present, the `body` property is not null, `formData` will be ignored.
