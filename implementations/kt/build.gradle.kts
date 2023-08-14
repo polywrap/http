@@ -7,7 +7,7 @@ plugins {
     id("convention.publication")
 }
 
-group = "io.polywrap"
+group = "io.polywrap.plugins"
 version = "0.10.0-SNAPSHOT"
 
 repositories {
@@ -47,7 +47,7 @@ kotlin {
 }
 
 android {
-    namespace = "io.polywrap.httpPlugin"
+    namespace = "io.polywrap.plugins.http"
     compileSdk = 32
     defaultConfig.minSdk = 24
     compileOptions {
