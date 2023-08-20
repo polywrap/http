@@ -57,7 +57,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe('{data: "test-response"}');
@@ -81,7 +81,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe(
@@ -114,7 +114,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe('{data: "test-response"}');
@@ -180,7 +180,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe(resPayloadStringfified);
@@ -205,7 +205,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe('{data: "test-response"}');
@@ -230,7 +230,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe(
@@ -264,7 +264,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe('{data: "test-response"}');
@@ -318,7 +318,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
       expect(response.value?.body).toBe(JSON.stringify({
@@ -347,7 +347,7 @@ describe("e2e tests for HttpPlugin", () => {
         },
       });
 
-      if (!response.ok) fail(response.error);
+      if (!response.ok) throw response.error;
       expect(response.value).toBeDefined();
       expect(response.value?.status).toBe(200);
 
